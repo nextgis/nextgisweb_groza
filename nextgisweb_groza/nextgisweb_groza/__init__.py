@@ -26,7 +26,7 @@ class GrozaComponent(Component):
 
 def pkginfo():
     return dict(components=dict(
-        tracker='nextgisweb_groza')
+        groza='nextgisweb_groza')
     )
 
 

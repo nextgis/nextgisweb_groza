@@ -8,6 +8,6 @@ class GrozaPlugin(WebmapPlugin):
     @classmethod
     def is_supported(cls, webmap):
         return (
-            'ngw-tracker/webmap/plugin/GrozaWebMap',
+            'ngw-groza/webmap/plugin/GrozaWebMap',
             dict()
         )

@@ -8,7 +8,7 @@ sdefine([
     'dojo/request/xhr',
     'dojo/json',
     'ngw/route',
-    'ngw-pyramid/i18n!tracker',
+    'ngw-pyramid/i18n!groza',
     'ngw-pyramid/hbs-i18n',
     'dojo/text!./GrozaSettings.hbs',
     'dijit/layout/ContentPane',
