@@ -1,8 +1,13 @@
+import VueCookies from 'vue-cookie'
 import {AUTH_ERROR, AUTH_LOGOUT, AUTH_REQUEST, AUTH_SUCCESS} from '../actions/auth'
 import {USER_REQUEST} from '../actions/user'
-import {LOGIN} from '../actions/ngw'
+import {NGW_LOGIN} from '../actions/ngw'
 
-const state = {token: localStorage.getItem('user-token') || '', status: '', hasLoadedOnce: false}
+const state = {
+  tktCookie: VueCookies.get('tkt') || '',
+  status: '',
+  hasLoadedOnce: false
+}
 
 const getters = {
   isAuthenticated: state => !!state.token,
@@ -13,18 +18,20 @@ const actions = {
   [AUTH_REQUEST]: ({commit, dispatch}, user) => {
     return new Promise((resolve, reject) => {
       commit(AUTH_REQUEST)
-      dispatch(LOGIN, user).then(resp => {
-          // localStorage.setItem('user-token', resp.token)
-          // Here set the header of your ajax library to the token value.
-          // example with axios
-          // axios.defaults.headers.common['Authorization'] = resp.token
-          commit(AUTH_SUCCESS, resp)
-          dispatch(USER_REQUEST)
-          resolve(resp)
+      dispatch(NGW_LOGIN, user)
+        .then(resp => {
+          if (resp.data.login === true) {
+            commit(AUTH_SUCCESS)
+            dispatch(USER_REQUEST)
+            resolve(true)
+          } else {
+            VueCookie.remove('tkt')
+            resolve(false)
+          }
         })
         .catch(err => {
           commit(AUTH_ERROR, err)
-          localStorage.removeItem('user-token')
+          VueCookie.remove('tkt')
           reject(err)
         })
     })
@@ -32,7 +39,7 @@ const actions = {
   [AUTH_LOGOUT]: ({commit, dispatch}) => {
     return new Promise((resolve, reject) => {
       commit(AUTH_LOGOUT)
-      localStorage.removeItem('user-token')
+      VueCookie.remove('tkt')
       resolve()
     })
   }
@@ -42,9 +49,9 @@ const mutations = {
   [AUTH_REQUEST]: (state) => {
     state.status = 'loading'
   },
-  [AUTH_SUCCESS]: (state, resp) => {
+  [AUTH_SUCCESS]: (state) => {
     state.status = 'success'
-    state.token = resp.token
+    state.tktCookie = VueCookies.get('tkt')
     state.hasLoadedOnce = true
   },
   [AUTH_ERROR]: (state) => {
@@ -52,7 +59,7 @@ const mutations = {
     state.hasLoadedOnce = true
   },
   [AUTH_LOGOUT]: (state) => {
-    state.token = ''
+    state.tktCookie = ''
   }
 }
 

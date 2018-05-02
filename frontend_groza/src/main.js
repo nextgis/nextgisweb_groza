@@ -2,6 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import Vuetify from 'vuetify'
+import VueCookie from 'vue-cookie'
 import App from './App'
 import router from './router'
 import store from './store'
@@ -13,14 +14,12 @@ Vue.config.productionTip = false
 
 Vue.use(Vuetify, {
   theme: {
-    primary: '#016fc5',
-    secondary: '#b0bec5',
-    accent: '#8c9eff',
-    error: '#b71c1c'
+    primary: '#016fc5'
   }
 })
 
-/* eslint-disable no-new */
+Vue.use(VueCookie)
+
 new Vue({
   el: '#app',
   store,

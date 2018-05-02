@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
-import {LOGIN} from '../actions/ngw'
+import {NGW_LOGIN} from '../actions/ngw'
 import qs from "qs"
 
 const state = {}
@@ -14,8 +14,8 @@ const getters = {
 }
 
 const actions = {
-  [LOGIN]: ({commit, dispatch}, user) => {
-    return http.post('/login', qs.stringify(user))
+  [NGW_LOGIN]: ({commit, dispatch}, user) => {
+    return http.post('/groza/login', qs.stringify(user))
   }
 }
 

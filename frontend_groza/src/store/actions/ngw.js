@@ -1,1 +1,1 @@
-export const LOGIN = 'LOGIN'
+export const NGW_LOGIN = 'NGW_LOGIN'
