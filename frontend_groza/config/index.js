@@ -4,23 +4,35 @@
 
 const path = require('path')
 
+const NGW_URL = 'YOUR_NGW_INSTANCE_URL'
+const YOUR_DEV_HOST = '127.0.0.1'
+const YOUR_DEV_PORT = 8080
+
 module.exports = {
   dev: {
 
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/ngw': {
+        target: NGW_URL,
+        changeOrigin: true,
+        logLevel: 'debug',
+        pathRewrite: {
+          '^/ngw': ''
+        }
+      }
+    },
 
     // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST
-    port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    host: YOUR_DEV_HOST, // can be overwritten by process.env.HOST
+    port: YOUR_DEV_PORT, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
-    
     /**
      * Source Maps
      */
@@ -41,7 +53,7 @@ module.exports = {
     index: path.resolve(__dirname, '../dist/index.html'),
 
     // Paths
-    assetsRoot: path.resolve(__dirname, '../dist'),
+    assetsRoot: path.resolve(__dirname, '../../nextgisweb_groza/nextgisweb_groza/amd/ngw_groza/frontend/'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
 
