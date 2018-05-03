@@ -1,22 +1,20 @@
 import ConfigParser
 
 section_name = 'toa_collector'
+redis_section_name = 'redis'
 
 
 class Config():
     config = None
     toa_url = None
     ngw_url = None
+    redis_config = None
 
     @staticmethod
     def init():
         config = ConfigParser.RawConfigParser()
         config.read('../config.ini')
         Config.config = config
-
-    @staticmethod
-    def get_meta_db_name():
-        return Config.config.get(section_name, 'meta_db_name')
 
     @staticmethod
     def get_query_interval():
@@ -41,3 +39,14 @@ class Config():
             url = url[:-1]
         Config.ngw_url = url
         return Config.ngw_url
+
+    @staticmethod
+    def get_redis_config():
+        if Config.redis_config:
+            return Config.redis_config
+        Config.redis_config = {
+            'host': Config.config.get(redis_section_name, 'host'),
+            'port': Config.config.get(redis_section_name, 'port'),
+            'db': Config.config.get(redis_section_name, 'db')
+        }
+        return Config.redis_config

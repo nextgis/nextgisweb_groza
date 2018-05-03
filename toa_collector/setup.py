@@ -4,7 +4,8 @@ version = '0.0'
 
 requires = (
     'apscheduler',
-    'requests'
+    'requests',
+    'redis'
 )
 
 setup(
