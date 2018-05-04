@@ -7,7 +7,8 @@ requires = (
     'nextgisweb',
     'requests',
     'pyproj',
-    'python-dateutil'
+    'python-dateutil',
+    'marshmallow'
 )
 
 entry_points = {
