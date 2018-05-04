@@ -15,6 +15,8 @@ class Events(Base):
 
     event_id = db.Column(db.Unicode, unique=True, primary_key=True)
     event_type = db.Column(ENUM('Lighting', 'Other', name='groza_event_types'), nullable=False)
+    lighting_type = db.Column(db.Integer)  # 0 - cloud, 1 - positive ground, 2 - negative ground
+    amplitude = db.Column(db.Integer)
     last_modified_ts = db.Column(db.TIMESTAMP, nullable=False)
     event_ts = db.Column(db.TIMESTAMP, nullable=False)
     location = db.Column(ga.Geometry('Point', srid=4326, dimension=3))

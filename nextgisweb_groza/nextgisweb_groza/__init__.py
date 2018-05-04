@@ -3,7 +3,7 @@ import view
 from nextgisweb.component import Component, require
 from nextgisweb.models import DBSession
 
-from .model import Base
+from .models import Base
 from .util import COMP_ID
 
 
