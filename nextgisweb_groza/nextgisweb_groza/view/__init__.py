@@ -2,6 +2,7 @@
 
 from last_update import *
 from settings import *
+from auth import *
 
 
 def frontend(request):
@@ -27,3 +28,8 @@ def setup_pyramid(comp, config):
         'nextgisweb_groza.frontend',
         '/groza'
     ).add_view(frontend, renderer='nextgisweb_groza:template/frontend.mako')
+
+    config.add_route(
+        'nextgisweb_groza.login',
+        '/groza/login'
+    ).add_view(login, request_method='POST', renderer='json')
