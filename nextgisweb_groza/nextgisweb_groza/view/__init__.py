@@ -20,16 +20,16 @@ def setup_pyramid(comp, config):
     ).add_view(groza_settings, renderer='nextgisweb_groza:template/settings.mako')
 
     config.add_route(
-        'nextgisweb_groza.last_update',
-        '/groza/last-update'
-    ).add_view(get_last_update, renderer='json')
-
-    config.add_route(
         'nextgisweb_groza.frontend',
-        '/groza'
+        '/groza/'
     ).add_view(frontend, renderer='nextgisweb_groza:template/frontend.mako')
 
     config.add_route(
+        'nextgisweb_groza.last_update',
+        '/api/groza/last-update'
+    ).add_view(get_last_update, renderer='json')
+
+    config.add_route(
         'nextgisweb_groza.login',
-        '/groza/login'
+        '/api/groza/login'
     ).add_view(login, request_method='POST', renderer='json')
