@@ -6,3 +6,7 @@ ngw = {
 toa = {
     'getEvents': '{root}/dataservice?VERSION=1.0&REQUEST=GetEvents&COMPRESS=FALSE&START={start}&STOP={stop}'
 }
+
+rg = {
+    'initEvents': '{root}/events/init'
+}

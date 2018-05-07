@@ -1,5 +1,5 @@
 import requests
-from endpoints import ngw
+from ..endpoints import ngw
 
 
 class NgwFacade():
@@ -12,7 +12,6 @@ class NgwFacade():
     @staticmethod
     def get_last_update_ts():
         url = ngw['lastUpdate'].format(root=NgwFacade.config.get_ngw_url())
-
         response = requests.get(url)
         return int(response.text)
 
