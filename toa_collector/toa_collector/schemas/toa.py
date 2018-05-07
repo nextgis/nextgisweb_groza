@@ -46,9 +46,17 @@ class ToaEventSchema(Schema):
         else:
             ligh_t = None
 
+        if item['eventType'] == 'Lighting':
+            ev_t = 0
+        elif item['eventType'] == 'Other':
+            ev_t = 1
+        else:
+            raise ValueError('"%" event type is not defined'.format(item['eventType']))
+
         event = dict(
             id=item['eventId'],
             ligh_t=ligh_t,
+            ev_t=ev_t,
             lm_ts=int(time.mktime(item['lastModifiedDateTime'].timetuple())),
             ev_ts=int(time.mktime(item['eventDateTime'].timetuple())),
             ampl=item['amplitude']
@@ -65,4 +73,4 @@ class ToaEventsSetSchema(Schema):
     success = fields.Bool()
     msg = fields.String()
     count = fields.Int(required=False)
-    events = fields.Nested(ToaEventSchema, many=True, required=True)
+    events = fields.Nested(ToaEventSchema, many=True, required=False)
