@@ -1,7 +1,6 @@
 import geoalchemy2 as ga
 from nextgisweb import db
 from nextgisweb.models import declarative_base
-from sqlalchemy.dialects.postgresql import ENUM
 
 Base = declarative_base()
 
@@ -10,7 +9,7 @@ class Events(Base):
     __tablename__ = 'groza_events'
 
     event_id = db.Column(db.Unicode, primary_key=True)
-    event_type = db.Column(ENUM('Lighting', 'Other', name='groza_event_types'), nullable=False)
+    event_type = db.Column(db.Integer, nullable=False) # 0 - lighting, 1 - other
     lighting_type = db.Column(db.Integer)  # 0 - cloud, 1 - positive ground, 2 - negative ground
     amplitude = db.Column(db.Integer)
     last_modified_ts = db.Column(db.TIMESTAMP, nullable=False)
