@@ -13,7 +13,6 @@ class GrozaComponent(Component):
 
     def initialize(self):
         super(GrozaComponent, self).initialize()
-        from . import plugin
 
     @require('auth')
     def initialize_db(self):
