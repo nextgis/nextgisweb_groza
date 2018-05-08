@@ -5,7 +5,7 @@ from nextgisweb.models import declarative_base
 Base = declarative_base()
 
 
-class Events(Base):
+class Event(Base):
     __tablename__ = 'groza_events'
 
     event_id = db.Column(db.Unicode, primary_key=True)
