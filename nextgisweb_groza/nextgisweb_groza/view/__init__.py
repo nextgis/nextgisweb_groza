@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
+from auth import *
 from last_update import *
 from settings import *
-from auth import *
+from events import *
 
 
 def frontend(request):
@@ -30,6 +31,11 @@ def setup_pyramid(comp, config):
     ).add_view(get_last_update, renderer='json')
 
     config.add_route(
-        'nextgisweb_groza.login',
+        'nextgisweb_groza.api.login',
         '/api/groza/login'
     ).add_view(login, request_method='POST', renderer='json')
+
+    config.add_route(
+        'nextgisweb_groza.api.events',
+        '/api/groza/events/'
+    ).add_view(receive_events, request_method='POST', renderer='json')
