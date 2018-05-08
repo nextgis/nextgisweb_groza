@@ -1,4 +1,4 @@
-sdefine([
+define([
     'dojo/_base/declare',
     'dojo/_base/array',
     'dojo/_base/lang',
@@ -16,7 +16,8 @@ sdefine([
     'dijit/form/NumberTextBox',
     'dijit/form/Button',
     'dijit/form/Select',
-    'dojox/layout/TableContainer'
+    'dojox/layout/TableContainer',
+    'ngw-resource/ResourceBox'
 ], function (declare,
              array,
              lang,
@@ -44,10 +45,17 @@ sdefine([
 
         startup: function () {
             this.inherited(arguments);
-            var self = this;
+            var self = this,
+                data;
             xhr.get(API_URL, {
                 handleAs: 'json'
-            }).then(function (data) {});
+            }).then(function (result) {
+                data = result.data;
+                if (data.web_map) {
+                    self.webMap.attr('value', {'id': data.web_map});
+                }
+                self.ellipseZoomVisible.attr('value', data.ellipse_z_visible);
+            });
         },
 
         save: function () {
@@ -55,7 +63,8 @@ sdefine([
                 handleAs: 'json',
                 headers: {'Content-Type': 'application/json'},
                 data: json.stringify({
-
+                    web_map: this.webMap.attr('value').id,
+                    ellipse_z_visible: this.ellipseZoomVisible.attr('value')
                 })
             }).then(function () {
                 alert(i18n.gettext('Groza settings has been saved successfully!'));

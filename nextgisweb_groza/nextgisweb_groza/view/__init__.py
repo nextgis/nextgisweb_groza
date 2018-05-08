@@ -20,6 +20,10 @@ def setup_pyramid(comp, config):
         '/control-panel/groza'
     ).add_view(groza_settings, renderer='nextgisweb_groza:template/settings.mako')
 
+    config.add_route('groza.settings', '/api/component/groza/settings') \
+        .add_view(groza_settings_get, request_method='GET', renderer='json') \
+        .add_view(groza_settings_put, request_method='PUT', renderer='json')
+
     config.add_route(
         'nextgisweb_groza.frontend',
         '/groza/'
@@ -40,7 +44,4 @@ def setup_pyramid(comp, config):
         '/api/groza/events/'
     ).add_view(receive_events, request_method='POST', renderer='json')
 
-    config.add_route(
-        'nextgisweb_groza.api.events',
-        '/api/groza/events/'
-    ).add_view(receive_events, request_method='POST', renderer='json')
+    add_to_menu(comp)
