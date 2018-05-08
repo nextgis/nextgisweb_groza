@@ -1,15 +1,15 @@
 import json
 
 
-def response_ok(data):
+def response_ok(data=None):
     result = dict(success=True)
     if data:
-        result['data'] = json.dumps(data)
+        result['data'] = data
     return result
 
 
-def response_fail(data):
+def response_fail(data=None):
     result = dict(success=False)
     if data:
-        result['data'] = json.dumps(data)
+        result['data'] = data
     return result
