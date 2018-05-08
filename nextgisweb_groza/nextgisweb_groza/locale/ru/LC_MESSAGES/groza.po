@@ -1,0 +1,50 @@
+# Russian translations for PROJECT.
+# Copyright (C) 2018 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2018-05-08 10:54+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ru\n"
+"Language-Team: ru <LL@li.org>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.3.4\n"
+
+#: amd/ngw-groza/settings/GrozaSettings.hbs:11
+msgid "Web map"
+msgstr "Веб-карта"
+
+#: amd/ngw-groza/settings/GrozaSettings.hbs:16
+msgid "Displaying ellipses zoom"
+msgstr "Масштаб отображения эллипсов"
+
+#: amd/ngw-groza/settings/GrozaSettings.hbs:24
+msgid "Save"
+msgstr "Сохранить"
+
+#: amd/ngw-groza/settings/GrozaSettings.js:62
+msgid "Groza settings has been saved successfully!"
+msgstr "Настройки ГИС 'Гроза' усешно сохранены!"
+
+#: amd/ngw-groza/settings/GrozaSettings.js:64
+msgid "Error, Groza settings not has been saved!"
+msgstr "Ошибка, настройки ГИС 'Гроза' не были сохранены!"
+
+#: view/settings.py:16
+msgid "Groza settings"
+msgstr "ГИС Гроза"
+
+#: view/settings.py:53
+msgid "Groza"
+msgstr "Гроза"
+
