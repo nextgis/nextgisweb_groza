@@ -17,21 +17,24 @@ def groza_settings(request):
         dynmenu=request.env.pyramid.control_panel)
 
 
-def groza_settings_get(request):
-    result = {}
-
+def get_settings():
+    settings = dict()
     try:
-        result[ELLIPSE_ZOOM_VISIBLE] = env.core.settings_get(SETTINGS_MODULE_KEY, ELLIPSE_ZOOM_VISIBLE)
+        settings[ELLIPSE_ZOOM_VISIBLE] = env.core.settings_get(SETTINGS_MODULE_KEY, ELLIPSE_ZOOM_VISIBLE)
     except KeyError:
         env.core.settings_set(SETTINGS_MODULE_KEY, ELLIPSE_ZOOM_VISIBLE, 18)
-        result[ELLIPSE_ZOOM_VISIBLE] = 18
+        settings[ELLIPSE_ZOOM_VISIBLE] = 18
 
     try:
-        result[GROZA_WEB_MAP] = env.core.settings_get(SETTINGS_MODULE_KEY, GROZA_WEB_MAP)
+        settings[GROZA_WEB_MAP] = env.core.settings_get(SETTINGS_MODULE_KEY, GROZA_WEB_MAP)
     except KeyError:
         env.core.settings_set(SETTINGS_MODULE_KEY, GROZA_WEB_MAP, None)
-        result[GROZA_WEB_MAP] = None
+        settings[GROZA_WEB_MAP] = None
+    return settings
 
+
+def groza_settings_get(request):
+    result = get_settings()
     return response_ok(result)
 
 
