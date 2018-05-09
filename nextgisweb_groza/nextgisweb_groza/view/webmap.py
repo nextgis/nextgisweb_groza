@@ -45,6 +45,10 @@ def get_webmap_info(webmap, request):
                    **basemap.to_dict())
 
     return response_ok(dict(
+        extent=[
+            [webmap.extent_bottom, webmap.extent_left],
+            [webmap.extent_top, webmap.extent_right]
+        ],
         layers=layers,
         basemap=basemap
     ))
