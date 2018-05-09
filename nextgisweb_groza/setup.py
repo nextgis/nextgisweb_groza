@@ -5,6 +5,7 @@ version = '0.0'
 
 requires = (
     'nextgisweb',
+    'nextgisweb_basemap'
     'requests',
     'pyproj',
     'python-dateutil',
