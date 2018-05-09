@@ -64,11 +64,12 @@
     methods: {
       submit() {
         const {login, password} = this
+        const self = this
         this.$store.dispatch(AUTH_REQUEST, {login, password})
           .then((authResult) => {
             if (authResult) {
               this.authFail = false;
-              this.$router.push('/')
+              self.$router.push('/')
             } else {
               this.authFail = true;
             }

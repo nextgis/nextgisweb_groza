@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>[dev] Frontend for Groza GIS</title>
-    <link href="https://unpkg.com/vuetify/dist/vuetify.min.css" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
-    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+<head>
+  <meta charset="utf-8">
+  <title>[dev] Frontend for Groza GIS</title>
+  <link href="https://unpkg.com/vuetify/dist/vuetify.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
 
-    <script>
-      window.grozaConfig = {
-        ngwUrl: '/ngw'
+  <script>
+    window.grozaConfig = {
+      ngwUrl: '/ngw',
+      settings: {
+        ellipse_z_visible: 18,
+        web_map: 1
       }
-    </script>
-  </head>
-  <body>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+    };
+  </script>
+</head>
+<body>
+<div id="app"></div>
+<!-- built files will be auto injected -->
+</body>
 </html>

@@ -4,6 +4,8 @@
 
 <script>
   import Map from 'leaflet'
+  import {NGW_WEB_MAP} from '../../store/actions/ngw'
+
   export default {
     name: 'Map',
     mounted() {
@@ -11,7 +13,17 @@
     },
     methods: {
       initMap() {
-        this.map = L.map('map').setView([38.63, -90.23], 12);
+        this.$store.dispatch(NGW_WEB_MAP)
+          .then((httpAnswer) => {
+            const result = httpAnswer.data;
+            if (result.success) {
+              const webMapInfo = result.data;
+              this.map = L.map('map');
+              this.map.fitBounds(webMapInfo.extent);
+            } else {
+              // todo: handle unsuccessful result
+            }
+          })
       }
     }
   }

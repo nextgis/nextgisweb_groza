@@ -3,15 +3,21 @@ import {AUTH_ERROR, AUTH_LOGOUT, AUTH_REQUEST, AUTH_SUCCESS} from '../actions/au
 import {USER_REQUEST} from '../actions/user'
 import {NGW_LOGIN} from '../actions/ngw'
 
+const AUTH_RESULT_COOKIE = 'groza'
+
 const state = {
-  tktCookie: VueCookies.get('tkt') || '',
+  authCookie: VueCookies.get(AUTH_RESULT_COOKIE) === 'true' || false,
   status: '',
   hasLoadedOnce: false
 }
 
 const getters = {
-  isAuthenticated: state => !!state.token,
-  authStatus: state => state.status,
+  isAuthenticated: () => {
+    return state.authCookie
+  },
+  authStatus: () => {
+    return state.status
+  }
 }
 
 const actions = {
@@ -25,13 +31,13 @@ const actions = {
             dispatch(USER_REQUEST)
             resolve(true)
           } else {
-            VueCookie.remove('tkt')
+            VueCookies.delete(AUTH_RESULT_COOKIE)
             resolve(false)
           }
         })
         .catch(err => {
           commit(AUTH_ERROR, err)
-          VueCookie.remove('tkt')
+          VueCookies.delete(AUTH_RESULT_COOKIE)
           reject(err)
         })
     })
@@ -39,7 +45,7 @@ const actions = {
   [AUTH_LOGOUT]: ({commit, dispatch}) => {
     return new Promise((resolve, reject) => {
       commit(AUTH_LOGOUT)
-      VueCookie.remove('tkt')
+      VueCookies.delete(AUTH_RESULT_COOKIE)
       resolve()
     })
   }
@@ -51,7 +57,8 @@ const mutations = {
   },
   [AUTH_SUCCESS]: (state) => {
     state.status = 'success'
-    state.tktCookie = VueCookies.get('tkt')
+    VueCookies.set(AUTH_RESULT_COOKIE, true);
+    state.authCookie = true;
     state.hasLoadedOnce = true
   },
   [AUTH_ERROR]: (state) => {
@@ -59,7 +66,7 @@ const mutations = {
     state.hasLoadedOnce = true
   },
   [AUTH_LOGOUT]: (state) => {
-    state.tktCookie = ''
+    VueCookies.delete(AUTH_RESULT_COOKIE)
   }
 }
 

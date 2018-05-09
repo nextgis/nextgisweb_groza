@@ -8,7 +8,8 @@ import store from '../store'
 Vue.use(Router)
 
 const ifNotAuthenticated = (to, from, next) => {
-  if (!store.getters.isAuthenticated) {
+  const isAuthenticated = store.getters.isAuthenticated
+  if (!isAuthenticated) {
     next()
     return
   }
@@ -16,7 +17,8 @@ const ifNotAuthenticated = (to, from, next) => {
 }
 
 const ifAuthenticated = (to, from, next) => {
-  if (store.getters.isAuthenticated) {
+  const isAuthenticated = store.getters.isAuthenticated
+  if (isAuthenticated) {
     next()
     return
   }
@@ -24,7 +26,7 @@ const ifAuthenticated = (to, from, next) => {
 }
 
 export default new Router({
-  mode: 'history',
+  mode: 'hash',
   routes: [
     {
       path: '/',

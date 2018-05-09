@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
-import {NGW_LOGIN} from '../actions/ngw'
+import {NGW_LOGIN, NGW_WEB_MAP} from '../actions/ngw'
 import qs from "qs"
 
 const state = {}
@@ -15,7 +15,11 @@ const getters = {
 
 const actions = {
   [NGW_LOGIN]: ({commit, dispatch}, user) => {
-    return http.post('/groza/login', qs.stringify(user))
+    return http.post('/api/groza/login', qs.stringify(user))
+  },
+  [NGW_WEB_MAP]: ({commit, dispatch}) => {
+    const webmapId = window.grozaConfig.settings.web_map
+    return http.get(`/api/groza/webmap/${webmapId}/`)
   }
 }
 

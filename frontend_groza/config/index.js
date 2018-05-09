@@ -53,9 +53,9 @@ module.exports = {
     index: path.resolve(__dirname, '../dist/index.html'),
 
     // Paths
-    assetsRoot: path.resolve(__dirname, '../../nextgisweb_groza/nextgisweb_groza/amd/ngw_groza/frontend/'),
-    assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsRoot: path.resolve(__dirname, '../../nextgisweb_groza/nextgisweb_groza/amd/ngw-groza/frontend/'),
+    assetsSubDirectory: '',
+    assetsPublicPath: '.',
 
     /**
      * Source Maps
