@@ -8,14 +8,7 @@ from last_update import *
 from settings import *
 from events import *
 from webmap import *
-
-
-def frontend(request):
-    return {
-        'grozaConfig': {
-            'ngwUrl': request.application_url
-        }
-    }
+from frontend import *
 
 
 def setup_pyramid(comp, config):
