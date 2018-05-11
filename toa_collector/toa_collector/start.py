@@ -1,21 +1,59 @@
 from apscheduler.schedulers.blocking import BlockingScheduler
 from config import Config
 from toa_collector.facades import *
+from utils import get_now_utc_ts, get_timedelta_sec_from_ts
+import time
 
 
-def handle_last_interval():
-    last_update_ts = NgwFacade.get_last_update_ts()
-    get_events_result = ToaFacade.collect(last_update_ts)
+def pull_old_events(ts_start, ts_stop):
+    get_events_result = ToaFacade.collect(ts_start, ts_stop)
     if get_events_result:
-        NgwFacade.send_events_to_ngw(get_events_result)
-        RgFacade.init_events(get_events_result)
+        success_result = NgwFacade.send_events_to_ngw(get_events_result)
+        if not success_result:
+            time.sleep(Config.get_repeat_delay())
+            pull_old_events(ts_start, ts_stop)
+
+
+def handle_last_interval(current_ts):
+    chunk_pulling_period = Config.get_chunk_pulling_period()
+
+    last_update_ts = NgwFacade.get_last_update_ts()
+    next_sec_update_ts = last_update_ts + 1
+
+    time_delta_sec = get_timedelta_sec_from_ts(next_sec_update_ts, current_ts)
+
+    if time_delta_sec <= chunk_pulling_period:
+        pull_old_events(next_sec_update_ts, current_ts)
+    elif time_delta_sec > chunk_pulling_period:
+        current_start_ts = next_sec_update_ts
+        current_end_ts = current_start_ts + chunk_pulling_period
+        while current_end_ts < current_ts:
+            pull_old_events(current_start_ts, current_end_ts)
+            current_start_ts = current_end_ts + 1
+            current_end_ts = current_start_ts + chunk_pulling_period
+        pull_old_events(current_start_ts, current_ts)
+
+
+def init_redis(current_ts):
+    ts_start = current_ts - Config.get_active_monitoring_period()
+    get_events_result = ToaFacade.collect(ts_start, current_ts)
+    RgFacade.init_events(get_events_result)
 
 
 def run():
-    handle_last_interval()
-    scheduler = BlockingScheduler()
-    scheduler.add_job(ToaFacade.collect, 'interval', id='collect', seconds=Config.get_query_interval())
-    scheduler.start()
+    current_ts = get_now_utc_ts()
+    handle_last_interval(current_ts)
+
+    query_interval = Config.get_query_interval()
+    if get_now_utc_ts() - current_ts > query_interval:
+        current_ts = get_now_utc_ts()
+        handle_last_interval(current_ts)
+
+    init_redis(current_ts)
+
+    # scheduler = BlockingScheduler()
+    # scheduler.add_job(ToaFacade.collect, 'interval', id='collect', seconds=query_interval)
+    # scheduler.start()
 
 
 def main():

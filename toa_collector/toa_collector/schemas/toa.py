@@ -46,7 +46,7 @@ class ToaEventSchema(Schema):
         else:
             ligh_t = None
 
-        if item['eventType'] == 'Lighting':
+        if item['eventType'] == 'Lightning':
             ev_t = 0
         elif item['eventType'] == 'Other':
             ev_t = 1

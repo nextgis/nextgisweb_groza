@@ -1,5 +1,5 @@
 import requests
-from ..endpoints import ngw
+from ..endpoints import rg
 
 
 class RgFacade():
@@ -11,6 +11,6 @@ class RgFacade():
 
     @staticmethod
     def init_events(get_events_result):
-        url = ngw['initEvents'].format(root=RgFacade.config.get_rg_url())
-        response = requests.post(url, get_events_result.to_json())
+        url = rg['initEvents'].format(root=RgFacade.config.get_rg_url())
+        response = requests.post(url, json=get_events_result.to_json())
         return response.status_code == 200

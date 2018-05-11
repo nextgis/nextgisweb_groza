@@ -33,7 +33,7 @@ class ToaFacade():
 
         schema_result = ToaEventsSetSchema().loads(response.text)
 
-        if schema_result.errors.keys() == 0 and schema_result.data['success'] is True:
+        if len(schema_result.errors.keys()) == 0 and schema_result.data['success'] is True:
             return GetEventsResult(ts_start, ts_stop, schema_result.data['events'])
         else:
             return None
