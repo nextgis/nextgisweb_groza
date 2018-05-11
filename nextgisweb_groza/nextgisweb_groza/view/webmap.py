@@ -1,16 +1,11 @@
 # -*- coding: utf-8 -*-
-import transaction
-from last_update import LAST_UPDATE_KEY
-from nextgisweb.models import DBSession
 from nextgisweb.webmap.adapter import WebMapAdapter
 from nextgisweb.webmap.model import WebMap
-from nextgisweb_groza.models import Meta, EventsSetSchema
-from pyramid.exceptions import HTTPBadRequest
 from response import *
 
 
 def get_webmap_layers(webmap_item, layers):
-    if webmap_item.item_type == 'layer':
+    if webmap_item.item_type == 'layer' and webmap_item.layer_enabled:
         style = webmap_item.style
         data = dict(
             id=webmap_item.id,
