@@ -1,7 +1,9 @@
 const errors = require('restify-errors');
 const Router = require('restify-router').Router;
-const RedisClient = require('../redisClient');
 const router = new Router();
+const RedisDb = require('../redis.db').default;
+
+const redisDb = new RedisDb();
 
 router.post('/events', function indexHTML(req, res, next) {
         const events = JSON.parse(req.body);
@@ -15,7 +17,10 @@ router.post('/events', function indexHTML(req, res, next) {
 router.post('/events/init', function indexHTML(req, res, next) {
         try {
             const getEventsResult = JSON.parse(req.body);
-            RedisClient.rg.initEvents(getEventsResult);
+
+            const result = redisDb.flushdb();
+            redisDb.createEvents(getEventsResult.data, 20);
+
             res.json({
                 success: true,
                 data: {
@@ -24,8 +29,10 @@ router.post('/events/init', function indexHTML(req, res, next) {
                     stop: getEventsResult.stop
                 }
             });
+
             next();
         } catch (e) {
+            console.log(e);
             next(new errors.InternalServerError());
         }
     }

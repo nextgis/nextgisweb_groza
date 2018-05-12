@@ -1,8 +1,7 @@
+const RedisSubscriber = require('./redis.subscriber').default;
 const restify = require('restify');
 const socketio = require('socket.io');
-const fs = require('fs');
 
-const RedisClient = require('./redisClient');
 const apiEventsRouter = require('./api/events');
 const viewRouter = require('./view');
 
@@ -32,12 +31,14 @@ server.on('uncaughtException', (req, res, route, err) => {
     console.log('uncaughtException');
 });
 
+function RedisExpiredEvents() {
+    RedisSubscriber.subscribeKeyEvent('expired');
+    RedisSubscriber.on('message', async (channel, message) => {
+        console.log(`${channel} => ${message}`);
+    });
+}
+RedisExpiredEvents();
+
 server.listen(8085, function () {
     console.log('socket.io server listening at %s', server.url);
-});
-
-process.on('SIGINT', function () {
-    RedisClient.quit();
-    console.log('Finished all requests');
-    process.exit(0)
 });
