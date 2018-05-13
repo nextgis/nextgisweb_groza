@@ -8,11 +8,35 @@ const subscriber = new Redis({
 });
 
 exports.default = new class Subscriber {
-    subscribeKeyEvent(eventName, keyName = '') {
-        const db = config.redisConfig.db;
-        const channel = `__keyevent@${db}__:${eventName} ${keyName}`;
-        subscriber.subscribe(channel);
-        console.log(`Subscriber:subscribeKeyEvent => channel "${channel}"`);
+    subscribeEvent(eventName) {
+        const promise = (resolve, reject) => {
+            subscriber.on('ready', () => {
+                subscriber.config('SET', 'notify-keyspace-events', 'KEA').then(() => {
+                    console.log(`RedisDb ${config.redisConfig.db} on ${config.redisConfig.host}:${config.redisConfig.port} set notify-keyspace-events`);
+                    const channel = `__keyevent@${config.redisConfig.db}__:${eventName}`;
+                    subscriber.subscribe(channel).then(() => {
+                        console.log(`Subscriber:subscribeKeyEvent => channel "${channel}"`);
+                        resolve();
+                    });
+                });
+            })
+        };
+        return new Promise(promise);
+    }
+
+    psubscribe(template) {
+        const promise = (resolve, reject) => {
+            subscriber.on('ready', () => {
+                subscriber.config('SET', 'notify-keyspace-events', 'KEA').then(() => {
+                    console.log(`RedisDb ${config.redisConfig.db} on ${config.redisConfig.host}:${config.redisConfig.port} set notify-keyspace-events`);
+                    subscriber.psubscribe(template).then(() => {
+                        console.log(`Subscriber:pSubscribe => template "${template}"`);
+                        resolve();
+                    });
+                });
+            })
+        };
+        return new Promise(promise);
     }
 
     on(event, callback) {

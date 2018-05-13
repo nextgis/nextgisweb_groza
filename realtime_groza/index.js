@@ -32,11 +32,14 @@ server.on('uncaughtException', (req, res, route, err) => {
 });
 
 function RedisExpiredEvents() {
-    RedisSubscriber.subscribeKeyEvent('expired');
-    RedisSubscriber.on('message', async (channel, message) => {
-        console.log(`${channel} => ${message}`);
+    RedisSubscriber.subscribeEvent('set').then(() => {
+        console.log('RedisSubscriber was subscribed to "expired" events');
+        RedisSubscriber.on('message', (channel, message) => {
+            console.log(`${channel} => ${message}`);
+        });
     });
 }
+
 RedisExpiredEvents();
 
 server.listen(8085, function () {
