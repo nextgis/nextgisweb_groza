@@ -1,4 +1,4 @@
-const RedisSubscriber = require('./redis.subscriber').default;
+const ExpireRules = require('./core/expireRules').ExpireRules;
 const restify = require('restify');
 const socketio = require('socket.io');
 
@@ -31,16 +31,7 @@ server.on('uncaughtException', (req, res, route, err) => {
     console.log('uncaughtException');
 });
 
-function RedisExpiredEvents() {
-    RedisSubscriber.subscribeEvent('set').then(() => {
-        console.log('RedisSubscriber was subscribed to "expired" events');
-        RedisSubscriber.on('message', (channel, message) => {
-            console.log(`${channel} => ${message}`);
-        });
-    });
-}
-
-RedisExpiredEvents();
+ExpireRules.subscribeExpire();
 
 server.listen(8085, function () {
     console.log('socket.io server listening at %s', server.url);

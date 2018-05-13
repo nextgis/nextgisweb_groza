@@ -1,16 +1,13 @@
 const Redis = require('ioredis');
-const config = require('./config');
+const redisConfig = require('./config');
+const ExpireRules = require('./core/expireRules').ExpireRules;
 
 exports.default = class RedisDb {
     constructor() {
         this.redis = new Redis({
-            host: config.redisConfig.host,
-            port: config.redisConfig.port,
-            db: config.redisConfig.db
-        });
-        this.redis.on('ready', () => {
-            this.redis.config('SET', 'notify-keyspace-events', 'KEx');
-            console.log('RedisDb set notify-keyspace-events');
+            host: redisConfig.redisConfig.host,
+            port: redisConfig.redisConfig.port,
+            db: redisConfig.redisConfig.db
         });
     }
 
@@ -22,20 +19,29 @@ exports.default = class RedisDb {
         return this.redis.flushdb();
     }
 
-    createEvents(eventItems, expire) {
-        const multi = this.redis.multi();
+    createEventsItems(eventItems) {
+        const tsNow = Math.floor(Date.now() / 1000);
 
+        const multi = this.redis.multi();
         for (let eventItem of eventItems) {
             const eventId = eventItem.id;
+
             const eventJson = JSON.stringify(eventItem);
-            const key = `event:${eventId}:json`;
+            const jsonKey = `event:${eventId}:json`;
+            multi
+                .set(jsonKey, eventJson);
+
+            const expireKey = `event:${eventId}:ex`;
+            const [expire, rule] = ExpireRules.getRangeExpire(eventItem.lm_ts, tsNow);
+
+            if (expire === null) {
+                console.log(`RedisDb.createEventsItems: Event "${eventItem.id}" is not in range for ${eventItem.lm_ts} sec. Now ${tsNow} sec.`)
+            }
 
             multi
-                .set(key, eventJson)
-                .set(key, expire)
-                .expire(key, expire);
+                .set(expireKey, rule)
+                .expire(expireKey, expire);
         }
-
         multi.exec()
 
     }

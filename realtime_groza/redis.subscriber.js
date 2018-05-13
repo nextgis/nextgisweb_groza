@@ -15,7 +15,7 @@ exports.default = new class Subscriber {
                     console.log(`RedisDb ${config.redisConfig.db} on ${config.redisConfig.host}:${config.redisConfig.port} set notify-keyspace-events`);
                     const channel = `__keyevent@${config.redisConfig.db}__:${eventName}`;
                     subscriber.subscribe(channel).then(() => {
-                        console.log(`Subscriber:subscribeKeyEvent => channel "${channel}"`);
+                        console.log(`Subscriber:subscribeEvent => channel "${channel}"`);
                         resolve();
                     });
                 });
@@ -30,7 +30,7 @@ exports.default = new class Subscriber {
                 subscriber.config('SET', 'notify-keyspace-events', 'KEA').then(() => {
                     console.log(`RedisDb ${config.redisConfig.db} on ${config.redisConfig.host}:${config.redisConfig.port} set notify-keyspace-events`);
                     subscriber.psubscribe(template).then(() => {
-                        console.log(`Subscriber:pSubscribe => template "${template}"`);
+                        console.log(`Subscriber:psubscribe => template "${template}"`);
                         resolve();
                     });
                 });

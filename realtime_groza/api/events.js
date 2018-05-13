@@ -19,7 +19,7 @@ router.post('/events/init', function indexHTML(req, res, next) {
             const getEventsResult = JSON.parse(req.body);
 
             const result = redisDb.flushdb();
-            redisDb.createEvents(getEventsResult.data, 20);
+            redisDb.createEventsItems(getEventsResult.data, 10);
 
             res.json({
                 success: true,

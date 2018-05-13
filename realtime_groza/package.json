@@ -23,6 +23,7 @@
   "homepage": "https://github.com/nextgis/nextgisweb_groza#readme",
   "dependencies": {
     "ioredis": "^3.2.2",
+    "lodash": "^4.17.10",
     "redis": "^2.8.0",
     "restify": "^7.1.1",
     "restify-router": "^0.5.0",
