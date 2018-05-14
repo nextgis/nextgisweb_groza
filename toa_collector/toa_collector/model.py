@@ -8,8 +8,11 @@ class GetEventsResult:
         self.data = json_data
 
     def to_json(self):
-        return json.dumps({
+        return json.dumps(self.to_dict())
+
+    def to_dict(self):
+        return {
             'start': self.start,
             'stop': self.stop,
             'data': self.data
-        })
+        }

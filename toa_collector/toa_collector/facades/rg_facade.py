@@ -11,6 +11,6 @@ class RgFacade():
 
     @staticmethod
     def init_events(get_events_result):
-        url = rg['initEvents'].format(root=RgFacade.config.get_rg_url())
-        response = requests.post(url, json=get_events_result.to_json())
+        url = rg['events'].format(root=RgFacade.config.get_rg_url())
+        response = requests.post(url, json=get_events_result.to_dict())
         return response.status_code == 200
