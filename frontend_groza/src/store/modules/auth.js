@@ -57,7 +57,7 @@ const mutations = {
   },
   [AUTH_SUCCESS]: (state) => {
     state.status = 'success'
-    VueCookies.set(AUTH_RESULT_COOKIE, true);
+    VueCookies.set(AUTH_RESULT_COOKIE, true, { expires: '3D' });
     state.authCookie = true;
     state.hasLoadedOnce = true
   },
