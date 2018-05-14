@@ -4,7 +4,9 @@
 
 <script>
   import Map from 'leaflet'
-  import {NGW_WEB_MAP} from '../../store/actions/ngw'
+  import {IMAGE_ADAPTER_URL, NGW_WEB_MAP} from '../../store/actions/ngw'
+  import EventsOverlay from '../../core/layers/EventsOverlay'
+  import EventsSocket from '../../core/socket'
 
   export default {
     name: 'Map',
@@ -15,14 +17,30 @@
       initMap() {
         this.$store.dispatch(NGW_WEB_MAP)
           .then((httpAnswer) => {
-            const result = httpAnswer.data;
+            const result = httpAnswer.data
             if (result.success) {
-              const webMapInfo = result.data;
-              this.map = L.map('map');
-              this.map.fitBounds(webMapInfo.extent);
+              const webMapInfo = result.data
+              this.map = L.map('map', {
+                crs: L.CRS.EPSG3857
+              })
+              this.map.fitBounds(webMapInfo.extent)
+              const basemapInfo = webMapInfo.basemap
+              const basemapLayer = L.tileLayer(basemapInfo.url, {id: basemapInfo.resource_id})
+              this.map.addLayer(basemapLayer)
+
+              const layers = webMapInfo.layers
+              const imageAdapterUrl = this.$store.dispatch(IMAGE_ADAPTER_URL)
+              for (let layer of layers) {
+                // const imageNgwLayer = new L.ImageOverlay.ImageNgwOverlay(imageAdapterUrl)
+                // this.map.addLayer(imageNgwLayer)
+              }
             } else {
               // todo: handle unsuccessful result
             }
+
+            const eventsSocket = new EventsSocket();
+            const eventsOveray = new EventsOverlay(eventsSocket, window.grozaConfig.eventsStyles);
+            this.map.addLayer(eventsOveray);
           })
       }
     }
