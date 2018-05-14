@@ -10,7 +10,12 @@ module.exports.expireRules = [
     [3601, 10000],
     [10001, 50000],
     [50001, 86400]
-]
+];
+
+module.exports.rgConfig = {
+    host: '{YOUR_REARTIME_GROZA_HOST}',
+    port: '{YOUR_REALTIME_GROZA_PORT}'
+};
 
 module.exports.redisConfig = {
     host: 'localhost',
