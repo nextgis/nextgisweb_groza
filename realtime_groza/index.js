@@ -1,38 +1,31 @@
-const ExpireRules = require('./core/expireRules').ExpireRules;
-const restify = require('restify');
-const socketio = require('socket.io');
+const
+    feathers = require('@feathersjs/feathers'),
+    express = require('@feathersjs/express'),
+    socketio = require('@feathersjs/socketio'),
+    EventsService = require('./services/EventsService'),
+    config = require('./config');
 
-const apiEventsRouter = require('./api/events');
-const viewRouter = require('./view');
+const app = express(feathers());
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+app.configure(express.rest());
+app.configure(socketio());
 
-const server = restify.createServer({
-    name: 'realtime_groza',
-    version: '1.0.0'
+app.use('events', new EventsService());
+
+app.use(express.errorHandler());
+
+app.on('connection', connection => {
+    console.log('connection');
+    console.log(connection);
+    app.channel('everybody').join(connection);
+});
+app.publish(data => {
+    console.log('data');
+    console.log(data);
+    app.channel('everybody')
 });
 
-server.use(restify.plugins.bodyParser({
-    mapParams: true
-}));
-
-const io = socketio.listen(server.server);
-
-apiEventsRouter.applyRoutes(server);
-viewRouter.applyRoutes(server);
-
-io.sockets.on('connection', function (socket) {
-    socket.emit('news', {hello: 'world'});
-    socket.on('my other event', function (data) {
-        console.log(data);
-    });
-});
-
-server.on('uncaughtException', (req, res, route, err) => {
-    console.log(err); // Logs the error
-    console.log('uncaughtException');
-});
-
-ExpireRules.subscribeExpire();
-
-server.listen(8085, function () {
-    console.log('socket.io server listening at %s', server.url);
-});
+app.listen(config.rgConfig.port, config.rgConfig.host).on('listening', () =>
+    console.log(`Feathers server listening on ${config.rgConfig.host}:${config.rgConfig.port}`)
+);
