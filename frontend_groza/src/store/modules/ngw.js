@@ -1,12 +1,14 @@
 import Vue from 'vue'
 import axios from 'axios'
-import {NGW_LOGIN, NGW_WEB_MAP} from '../actions/ngw'
+import {NGW_LOGIN, NGW_WEB_MAP, IMAGE_ADAPTER_URL} from '../actions/ngw'
 import qs from "qs"
 
 const state = {}
 
+const baseUrl = window.grozaConfig.ngwUrl
+
 const http = axios.create({
-  baseURL: window.grozaConfig.ngwUrl
+  baseURL: baseUrl
 })
 
 const getters = {
@@ -20,6 +22,9 @@ const actions = {
   [NGW_WEB_MAP]: ({commit, dispatch}) => {
     const webmapId = window.grozaConfig.settings.web_map
     return http.get(`/api/groza/webmap/${webmapId}/`)
+  },
+  [IMAGE_ADAPTER_URL]: ({commit, dispatch}) => {
+    return `${baseUrl}/api/component/render/image`
   }
 }
 
