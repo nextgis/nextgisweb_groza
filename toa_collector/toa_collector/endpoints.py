@@ -8,5 +8,5 @@ toa = {
 }
 
 rg = {
-    'initEvents': '{root}/events/init'
+    'events': '{root}/events'
 }
