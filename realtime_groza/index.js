@@ -3,6 +3,7 @@ const
     express = require('@feathersjs/express'),
     socketio = require('@feathersjs/socketio'),
     EventsService = require('./services/EventsService'),
+    InitService = require('./services/InitService'),
     config = require('./config');
 
 const app = express(feathers());
@@ -20,6 +21,7 @@ app.use(express.urlencoded({
 app.configure(express.rest());
 app.configure(socketio());
 
+app.use('init', new InitService());
 app.use('events', new EventsService());
 
 app.use(express.errorHandler());
