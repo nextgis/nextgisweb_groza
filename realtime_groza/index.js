@@ -6,8 +6,17 @@ const
     config = require('./config');
 
 const app = express(feathers());
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+
+app.use(express.json({
+    limit: '20mb'
+}));
+
+app.use(express.urlencoded({
+    limit: '20mb',
+    extended: true,
+    parameterLimit: 20000
+}));
+
 app.configure(express.rest());
 app.configure(socketio());
 
