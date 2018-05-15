@@ -1,8 +1,8 @@
 from apscheduler.schedulers.blocking import BlockingScheduler
 from config import Config
 from toa_collector.facades import *
-from utils import get_now_utc_ts, get_timedelta_sec_from_ts
-import time
+from utils import get_now_utc_ts, get_timedelta_sec_from_ts, ts_to_iso_8601
+from log import info
 
 
 def pull_old_events(ts_start, ts_stop):
@@ -40,20 +40,49 @@ def init_redis(current_ts):
     RgFacade.init_events(get_events_result)
 
 
+def periodic_pull_events(ts_start, ts_stop):
+    get_events_result = ToaFacade.collect(ts_start, ts_stop)
+    if get_events_result:
+        push_events_to_ngw(get_events_result)
+        push_events_to_rg(get_events_result)
+
+
+def push_events_to_ngw(get_events_result):
+    success_result = NgwFacade.send_events_to_ngw(get_events_result)
+    if not success_result:
+        info('[NGW] Sent failed. Repeating...')
+        time.sleep(Config.get_repeat_delay())
+        push_events_to_ngw(get_events_result)
+
+
+def push_events_to_rg(get_events_result):
+    success_result = RgFacade.send_events(get_events_result)
+    if not success_result:
+        info('[RG] Sent failed. Repeating...')
+        time.sleep(Config.get_repeat_delay())
+        push_events_to_rg(get_events_result)
+
+
+def periodic_collect():
+    current_ts = get_now_utc_ts()
+    last_update_ts = NgwFacade.get_last_update_cached()
+    info('[periodic] Start update from "{start}" to "{end}"'.format(
+        start=ts_to_iso_8601(last_update_ts),
+        end=ts_to_iso_8601(current_ts)
+    ))
+    periodic_pull_events(last_update_ts, current_ts)
+    return True
+
+
 def run():
     current_ts = get_now_utc_ts()
     handle_last_interval(current_ts)
-
-    query_interval = Config.get_query_interval()
-    if get_now_utc_ts() - current_ts > query_interval:
-        current_ts = get_now_utc_ts()
-        handle_last_interval(current_ts)
-
     init_redis(current_ts)
 
-    # scheduler = BlockingScheduler()
-    # scheduler.add_job(ToaFacade.collect, 'interval', id='collect', seconds=query_interval)
-    # scheduler.start()
+    query_interval = Config.get_query_interval()
+    scheduler = BlockingScheduler()
+    scheduler.add_job(periodic_collect, 'interval', id='periodic_collect', seconds=query_interval)
+    scheduler.start()
 
 
 def main():
