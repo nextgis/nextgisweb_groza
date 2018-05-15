@@ -1,9 +1,9 @@
+import calendar
 import datetime
-import time
 
 
 def get_now_utc_ts():
-    return int(time.time())
+    return calendar.timegm(datetime.datetime.utcnow().utctimetuple())
 
 
 def get_timedelta_from_ts(start, end):
@@ -22,4 +22,4 @@ def get_now_utc_iso_8601():
 
 
 def ts_to_iso_8601(ts):
-    return datetime.datetime.fromtimestamp(ts).strftime("%Y-%m-%dT%H%M%SZ")
+    return datetime.datetime.utcfromtimestamp(ts).strftime("%Y-%m-%dT%H%M%SZ")
