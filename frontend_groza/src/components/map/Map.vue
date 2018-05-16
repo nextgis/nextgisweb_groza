@@ -7,6 +7,7 @@
   import {IMAGE_ADAPTER_URL, NGW_WEB_MAP} from '../../store/actions/ngw'
   import EventsOverlay from '../../core/layers/EventsOverlay'
   import EventsSocket from '../../core/socket'
+  import PanelControl from '../../core/controls/Panel'
 
   export default {
     name: 'Map',
@@ -41,6 +42,9 @@
             const eventsSocket = new EventsSocket();
             const eventsOveray = new EventsOverlay(eventsSocket, window.grozaConfig.eventsStyles);
             this.map.addLayer(eventsOveray);
+
+            const panel = new PanelControl({position: 'topright'});
+            panel.addTo(this.map);
           })
       }
     }
