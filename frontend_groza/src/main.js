@@ -9,8 +9,16 @@ import store from './store'
 import 'babel-polyfill'
 import 'vuetify/dist/vuetify.min.css'
 import 'leaflet/dist/leaflet.css'
+import VueSplitPane from 'vue-splitpane'
+import moment from 'moment'
+import formatcoords from 'formatcoords'
+
+Vue.prototype.moment = moment
+Vue.prototype.formatcoords = formatcoords
 
 Vue.config.productionTip = false
+
+Vue.component('split-pane', VueSplitPane);
 
 Vue.use(Vuetify, {
   theme: {
