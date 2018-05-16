@@ -7,6 +7,7 @@ def frontend(request):
     return {
         'grozaConfig': {
             'ngwUrl': request.application_url,
+            'rgUrl': request.env.groza.settings['rg_url'],
             'settings': settings
         }
     }
