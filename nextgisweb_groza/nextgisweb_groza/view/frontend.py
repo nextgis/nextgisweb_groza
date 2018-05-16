@@ -2,7 +2,7 @@ from settings import get_settings
 
 
 def frontend(request):
-    settings = get_settings()
+    groza_settings = get_settings()
     config_settings = request.env.groza.settings
 
     return {
@@ -10,6 +10,6 @@ def frontend(request):
             'ngwUrl': request.application_url,
             'rgUrl': config_settings['rg_url'],
             'rgPath': config_settings['rg_path'],
-            'settings': settings
+            'settings': groza_settings
         }
     }

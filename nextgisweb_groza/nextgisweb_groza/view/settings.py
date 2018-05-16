@@ -39,7 +39,7 @@ def get_settings():
         settings[EVENTS_STYLES] = json.loads(events_styles_str)
     except KeyError:
         events_styles_str = json.dumps(eventsStyles)
-        env.core.settings_set(SETTINGS_MODULE_KEY, EVENTS_STYLES, json.dumps(events_styles_str))
+        env.core.settings_set(SETTINGS_MODULE_KEY, EVENTS_STYLES, events_styles_str)
         settings[EVENTS_STYLES] = eventsStyles
     return settings
 
