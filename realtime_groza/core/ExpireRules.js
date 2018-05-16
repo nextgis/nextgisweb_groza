@@ -26,4 +26,4 @@ class ExpireRules {
     }
 }
 
-exports.ExpireRules = ExpireRules;
+module.exports = ExpireRules;

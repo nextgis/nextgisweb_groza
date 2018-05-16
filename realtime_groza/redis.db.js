@@ -1,6 +1,6 @@
 const Redis = require('ioredis');
 const redisConfig = require('./config');
-const ExpireRules = require('./core/expireRules').ExpireRules;
+const ExpireRules = require('./core/ExpireRules');
 
 class RedisDb {
     constructor() {

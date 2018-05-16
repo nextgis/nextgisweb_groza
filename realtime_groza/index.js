@@ -2,6 +2,7 @@ const
     feathers = require('@feathersjs/feathers'),
     express = require('@feathersjs/express'),
     socketio = require('@feathersjs/socketio'),
+    ExpireRules = require('./core/ExpireRules'),
     EventsService = require('./services/EventsService'),
     InitService = require('./services/InitService'),
     config = require('./config');
@@ -36,6 +37,8 @@ app.publish(data => {
     console.log(data);
     app.channel('everybody')
 });
+
+ExpireRules.subscribeExpire();
 
 app.listen(config.rgConfig.port, config.rgConfig.host).on('listening', () =>
     console.log(`Feathers server listening on ${config.rgConfig.host}:${config.rgConfig.port}`)
