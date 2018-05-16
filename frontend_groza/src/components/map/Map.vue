@@ -40,7 +40,7 @@
             }
 
             const eventsSocket = new EventsSocket();
-            const eventsOveray = new EventsOverlay(eventsSocket, window.grozaConfig.eventsStyles);
+            const eventsOveray = new EventsOverlay(eventsSocket, window.grozaConfig.settings.eventsStyles);
             this.map.addLayer(eventsOveray);
 
             const panel = new PanelControl({position: 'topright'});
