@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
+import json
 from nextgisweb import dynmenu as dm
 from nextgisweb.env import env
 from nextgisweb_groza.util import _
 from response import *
 from pyramid.httpexceptions import HTTPBadRequest
+from nextgisweb_groza.default_settings import eventsStyles
 
 SETTINGS_MODULE_KEY = 'groza'
 ELLIPSE_ZOOM_VISIBLE = 'ellipse_z_visible'
 GROZA_WEB_MAP = 'web_map'
+EVENTS_STYLES = 'eventsStyles'
 
 
 def groza_settings(request):
@@ -30,6 +33,14 @@ def get_settings():
     except KeyError:
         env.core.settings_set(SETTINGS_MODULE_KEY, GROZA_WEB_MAP, None)
         settings[GROZA_WEB_MAP] = None
+
+    try:
+        events_styles_str = env.core.settings_get(SETTINGS_MODULE_KEY, EVENTS_STYLES)
+        settings[EVENTS_STYLES] = json.loads(events_styles_str)
+    except KeyError:
+        events_styles_str = json.dumps(eventsStyles)
+        env.core.settings_set(SETTINGS_MODULE_KEY, EVENTS_STYLES, json.dumps(events_styles_str))
+        settings[EVENTS_STYLES] = eventsStyles
     return settings
 
 
