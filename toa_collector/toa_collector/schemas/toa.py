@@ -1,5 +1,6 @@
 import time
 from marshmallow import Schema, fields, post_load
+from ..utils import datetime_to_utc_ts
 
 
 class ToaErrorEllipse(Schema):
@@ -57,8 +58,8 @@ class ToaEventSchema(Schema):
             id=item['eventId'],
             ligh_t=ligh_t,
             ev_t=ev_t,
-            lm_ts=int(time.mktime(item['lastModifiedDateTime'].timetuple())),
-            ev_ts=int(time.mktime(item['eventDateTime'].timetuple())),
+            lm_ts=datetime_to_utc_ts(item['lastModifiedDateTime']),
+            ev_ts=datetime_to_utc_ts(item['eventDateTime']),
             ampl=item['amplitude']
         )
 

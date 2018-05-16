@@ -23,3 +23,7 @@ def get_now_utc_iso_8601():
 
 def ts_to_iso_8601(ts):
     return datetime.datetime.utcfromtimestamp(ts).strftime("%Y-%m-%dT%H%M%SZ")
+
+
+def datetime_to_utc_ts(dt):
+    return calendar.timegm(dt.utctimetuple())
