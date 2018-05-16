@@ -7,7 +7,7 @@ export default class EventsSocket {
     this.socket = io(window.grozaConfig.rgUrl, {
       transports: ['websocket'],
       // upgrade: false,
-      // path: '/'
+      path: window.grozaConfig.rgPath
     });
 
     this.socket.on('connection', function (socket) {
