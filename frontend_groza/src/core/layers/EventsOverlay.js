@@ -59,8 +59,6 @@ const EventsOverlay = L.FeatureGroup.extend({
     const that = this;
     this._eventsSocket.getEvents().then((eventsItems) => {
       that.addEvents(eventsItems);
-      const bounds = that.getBounds();
-      map.flyToBounds(bounds);
     });
   }
 });
