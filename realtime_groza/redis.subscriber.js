@@ -1,47 +1,46 @@
 const Redis = require('ioredis');
 const config = require('./config');
 
-const subscriber = new Redis({
+const redisIo = new Redis({
     host: config.redisConfig.host,
     port: config.redisConfig.port,
     db: config.redisConfig.db
 });
 
-exports.default = new class Subscriber {
-    subscribeEvent(eventName) {
+module.exports = new class Subscriber {
+    constructor() {
+        this._subscriber = {};
+        this._subscribeOnMessage();
+    }
+
+    _subscribeOnMessage(){
+        const that = this;
+        redisIo.on('message', (channel, message) => {
+            if (channel in that._subscriber) {
+                const callback = that._subscriber[channel];
+                callback(channel, message);
+            }
+        });
+    }
+
+    subscribeKeySpaceEvent(eventName, callback) {
+        const that = this;
         const promise = (resolve, reject) => {
-            subscriber.on('ready', () => {
-                subscriber.config('SET', 'notify-keyspace-events', 'KEA').then(() => {
+            redisIo.on('ready', () => {
+                redisIo.config('SET', 'notify-keyspace-events', 'KEA').then(() => {
                     console.log(`RedisDb ${config.redisConfig.db} on ${config.redisConfig.host}:${config.redisConfig.port} set notify-keyspace-events`);
                     const channel = `__keyevent@${config.redisConfig.db}__:${eventName}`;
-                    subscriber.subscribe(channel).then(() => {
+                    redisIo.subscribe(channel).then(() => {
                         console.log(`Subscriber:subscribeEvent => channel "${channel}"`);
+                        if (channel in that._subscriber) {
+                            throw Exception(`Subscriber.subscribeKeySpaceEvent: channel "${channel}" already registered.`)
+                        }
+                        that._subscriber[channel] = callback;
                         resolve();
                     });
                 });
             })
         };
         return new Promise(promise);
-    }
-
-    psubscribe(template) {
-        const promise = (resolve, reject) => {
-            subscriber.on('ready', () => {
-                subscriber.config('SET', 'notify-keyspace-events', 'KEA').then(() => {
-                    console.log(`RedisDb ${config.redisConfig.db} on ${config.redisConfig.host}:${config.redisConfig.port} set notify-keyspace-events`);
-                    subscriber.psubscribe(template).then(() => {
-                        console.log(`Subscriber:psubscribe => template "${template}"`);
-                        resolve();
-                    });
-                });
-            })
-        };
-        return new Promise(promise);
-    }
-
-    on(event, callback) {
-        subscriber.on(event, (channel, message) => {
-            callback(channel, message);
-        });
     }
 }();

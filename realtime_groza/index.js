@@ -2,7 +2,8 @@ const
     feathers = require('@feathersjs/feathers'),
     express = require('@feathersjs/express'),
     socketio = require('@feathersjs/socketio'),
-    ExpireRules = require('./core/ExpireRules'),
+    RedisExpireController = require('./redis.controller.expire'),
+    RedisSetController = require('./redis.controller.set'),
     EventsService = require('./services/EventsService'),
     InitService = require('./services/InitService'),
     config = require('./config');
@@ -38,7 +39,8 @@ app.publish(data => {
     app.channel('everybody')
 });
 
-ExpireRules.subscribeExpire();
+RedisExpireController.subscribeExpire();
+RedisSetController.subscribeSet();
 
 app.listen(config.rgConfig.port, config.rgConfig.host).on('listening', () =>
     console.log(`Feathers server listening on ${config.rgConfig.host}:${config.rgConfig.port}`)
