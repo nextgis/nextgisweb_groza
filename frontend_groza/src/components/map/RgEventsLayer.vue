@@ -5,7 +5,7 @@
   import EventsOverlay from '../../core/layers/EventsOverlay'
 
   export default {
-    name: 'EventsLayer',
+    name: 'RgEventsLayer',
     mounted() {
       const map = this.$parent.map
       const eventsSocket = new EventsSocket();

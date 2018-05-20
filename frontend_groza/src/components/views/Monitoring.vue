@@ -1,6 +1,6 @@
 <template>
   <ng-map>
-    <events-layer></events-layer>
+    <rg-events-layer></rg-events-layer>
     <ngw-basemap-layer></ngw-basemap-layer>
   </ng-map>
 </template>
@@ -8,11 +8,11 @@
 <script>
   import NgMap from '../map/NgMap.vue'
   import NgwBasemapLayer from '../map/NgwBasemapLayer.vue'
-  import EventsLayer from '../map/EventsLayer'
+  import RgEventsLayer from '../map/RgEventsLayer'
 
   export default {
     name: 'Monitoring',
-    components: { NgMap, EventsLayer, NgwBasemapLayer }
+    components: { NgMap, RgEventsLayer, NgwBasemapLayer }
   }
 </script>
 
