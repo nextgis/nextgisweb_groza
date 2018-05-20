@@ -1,0 +1,59 @@
+<template>
+  <div class="ng-map">
+    <slot v-if="ready"></slot>
+  </div>
+</template>
+
+<script>
+  import {IMAGE_ADAPTER_URL, NGW_WEB_MAP} from '../../store/actions/ngw'
+  import PanelControl from '../../core/controls/Panel'
+
+  export default {
+    name: 'NgMap',
+    data() {
+      return {
+        ready: false
+      }
+    },
+    mounted() {
+      this.initMap();
+    },
+    methods: {
+      initMap() {
+        const that = this;
+        this.$store.dispatch(NGW_WEB_MAP)
+          .then((httpAnswer) => {
+            const result = httpAnswer.data
+            if (result.success) {
+              this.webMapInfo = result.data
+              this.map = L.map(this.$el, {
+                crs: L.CRS.EPSG3857
+              })
+              this.map.fitBounds(this.webMapInfo.extent)
+
+              // const layers = webMapInfo.layers
+              // const imageAdapterUrl = this.$store.dispatch(IMAGE_ADAPTER_URL)
+              // for (let layer of layers) {
+                // const imageNgwLayer = new L.ImageOverlay.ImageNgwOverlay(imageAdapterUrl)
+                // this.map.addLayer(imageNgwLayer)
+              // }
+            } else {
+              // todo: handle unsuccessful result
+            }
+
+            const panel = new PanelControl({position: 'topright'})
+            panel.addTo(this.map)
+
+            this.ready = true
+          })
+      }
+    }
+  }
+</script>
+
+<style scoped>
+  .ng-map {
+    width: 100%;
+    height: 100%;
+  }
+</style>

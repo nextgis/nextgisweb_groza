@@ -1,3 +1,4 @@
+import L from 'leaflet'
 import Panel from '../../components/map/Panel'
 import Vue from 'vue'
 
