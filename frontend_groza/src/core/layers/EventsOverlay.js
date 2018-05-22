@@ -1,4 +1,5 @@
 import {setOptions} from 'leaflet'
+import ShapeMarker from '../layers/L.ShapeMarker'
 import EventPopup from '../../components/map/EventPopup'
 import Vue from 'vue'
 
@@ -12,8 +13,12 @@ const EventsOverlay = L.FeatureGroup.extend({
   },
 
   addEvent: function (eventItem) {
-    const style = this._styles[eventItem.rule];
-    const circleMarker = new L.CircleMarker([eventItem.lat, eventItem.lon], style);
+    const style = this._styles.expired[eventItem.rule]
+    const lightTypeStyle = this._styles.types[eventItem.ligh_t]
+    Object.assign(style, lightTypeStyle)
+
+    const circleMarker = new ShapeMarker([eventItem.lat, eventItem.lon], style)
+
     circleMarker._grozaEvent = eventItem;
     circleMarker._grozaId = eventItem.id;
     this.addLayer(circleMarker);

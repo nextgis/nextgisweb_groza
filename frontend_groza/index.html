@@ -10,12 +10,24 @@
   <script>
     window.grozaConfig = {
       ngwUrl: '/ngw',
-      rgUrl: '{YOUR_RG_HOST_URL}',
-      rgPath: '{YOUR_RG_PATH_URL}',
+      rgUrl: '192.168.152.128:8085',
+      rgPath: '/socket.io/',
       settings: {
         ellipse_z_visible: 18,
         web_map: 1,
         eventsStyles: {
+          types: {
+            0: {
+              shape: 'circle'
+            },
+            1: {
+              shape: 'circle-plus'
+            },
+            2: {
+              shape: 'circle-minus'
+            }
+          },
+          expired: {
           0: {
             fill: true,
             fillOpacity: 0.5,
@@ -104,6 +116,7 @@
             radius: 10,
             weight: 1
           }
+        }
         }
       }
     };
