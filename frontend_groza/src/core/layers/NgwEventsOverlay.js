@@ -2,26 +2,21 @@ import {setOptions} from 'leaflet'
 import ShapeMarker from '../layers/L.ShapeMarker'
 import EventPopup from '../../components/map/EventPopup'
 import Vue from 'vue'
+import EventBus from '../../event-bus'
+import store from '../../store/index'
+import {NGW_GET_EVENTS} from '../../store/actions/ngw'
 
-const EventsOverlay = L.FeatureGroup.extend({
-  initialize: function (eventsSocket, styles, options) {
+const NgwEventsOverlay = L.FeatureGroup.extend({
+  initialize: function (styles, options) {
     this._layers = {};
-    this._eventsSocket = eventsSocket;
     this._styles = styles;
     this._popup = null;
     setOptions(this, options);
   },
 
   addEvent: function (eventItem) {
-    const expireStyle = this._styles.expired[eventItem.rule]
     const lightTypeStyle = this._styles.types[eventItem.ligh_t]
-    const resultStyle = {}
-
-    Object.assign(resultStyle, lightTypeStyle)
-    Object.assign(resultStyle, expireStyle)
-
-    const circleMarker = new ShapeMarker([eventItem.lat, eventItem.lon], resultStyle)
-
+    const circleMarker = new ShapeMarker([eventItem.lat, eventItem.lon], lightTypeStyle)
     circleMarker._grozaEvent = eventItem;
     circleMarker._grozaId = eventItem.id;
     this.addLayer(circleMarker);
@@ -65,16 +60,23 @@ const EventsOverlay = L.FeatureGroup.extend({
 
   onAdd: function (map) {
     const that = this;
-    this._eventsSocket.getEvents().then((eventsItems) => {
-      that.addEvents(eventsItems);
+    EventBus.$on('UPDATE_HISTORY_EVENTS', function (startEndInfo) {
+      store.dispatch(NGW_GET_EVENTS, startEndInfo).then((httpAnswer) => {
+        const result = httpAnswer.data
+        if (result.success) {
+          that.addEvents(result.data);
+        } else {
+          // todo: handle unsuccessful result
+        }
+      })
     });
   }
 });
 
-L.EventsOverlay = EventsOverlay;
+L.NgwEventsOverlay = NgwEventsOverlay;
 
-L.eventsOverlay = function () {
-  return new EventsOverlay();
+L.ngwEventsOverlay = function () {
+  return new NgwEventsOverlay();
 };
 
-export default EventsOverlay;
+export default NgwEventsOverlay;

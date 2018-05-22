@@ -55,6 +55,7 @@
   import {Russian} from 'flatpickr/dist/l10n/ru'
   import moment from 'moment'
   import router from '../../../../router/index'
+  import EventBus from '../../../../event-bus'
 
   export default {
     name: 'HistoryPanelContent',
@@ -91,7 +92,10 @@
         console.log(dates)
         const start = moment.utc(dates[0]).format()
         const end = moment.utc(dates[1]).add(1, 'days').format()
-        console.log(start, end)
+        EventBus.$emit('UPDATE_HISTORY_EVENTS', {
+          start: start,
+          end: end
+        });
       }
     }
   }

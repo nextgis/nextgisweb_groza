@@ -1,7 +1,6 @@
-import Vue from 'vue'
 import axios from 'axios'
-import {NGW_LOGIN, NGW_WEB_MAP, IMAGE_ADAPTER_URL} from '../actions/ngw'
-import qs from "qs"
+import {IMAGE_ADAPTER_URL, NGW_GET_EVENTS, NGW_LOGIN, NGW_WEB_MAP} from '../actions/ngw'
+import qs from 'qs'
 
 const state = {}
 
@@ -11,9 +10,7 @@ const http = axios.create({
   baseURL: baseUrl
 })
 
-const getters = {
-
-}
+const getters = {}
 
 const actions = {
   [NGW_LOGIN]: ({commit, dispatch}, user) => {
@@ -25,11 +22,15 @@ const actions = {
   },
   [IMAGE_ADAPTER_URL]: ({commit, dispatch}) => {
     return `${baseUrl}/api/component/render/image`
+  },
+  [NGW_GET_EVENTS]: ({commit, dispatch}, params) => {
+    return http.get(`/api/groza/events/`, {
+      params: params
+    })
   }
 }
 
-const mutations = {
-}
+const mutations = {}
 
 export default {
   state,

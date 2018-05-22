@@ -10,113 +10,131 @@
   <script>
     window.grozaConfig = {
       ngwUrl: '/ngw',
-      rgUrl: '192.168.152.128:8085',
-      rgPath: '/socket.io/',
+      rgUrl: '{YOUR_RG_HOST_URL}',
+      rgPath: '{YOUR_RG_PATH_URL}',
       settings: {
         ellipse_z_visible: 18,
         web_map: 1,
         eventsStyles: {
           types: {
             0: {
-              shape: 'circle'
+              shape: 'circle',
+              fill: true,
+              fillOpacity: 0.5,
+              fillColor: '#cccccc',
+              color: '#999999',
+              radius: 10,
+              weight: 1
             },
             1: {
-              shape: 'circle-plus'
+              shape: 'circle-plus',
+              fill: true,
+              fillOpacity: 0.5,
+              fillColor: '#ff0000',
+              color: '#990000',
+              radius: 10,
+              weight: 1
             },
             2: {
-              shape: 'circle-minus'
+              shape: 'circle-minus',
+              fill: true,
+              fillOpacity: 0.5,
+              fillColor: '#3385ff',
+              color: '#0047b3',
+              radius: 10,
+              weight: 1
             }
           },
           expired: {
-          0: {
-            fill: true,
-            fillOpacity: 0.5,
-            fillColor: '#ffff00',
-            color: '#999900',
-            radius: 10,
-            weight: 1
-          },
-          61: {
-            fill: true,
-            fillOpacity: 0.5,
-            fillColor: '#ff0000',
-            color: '#990000',
-            radius: 10,
-            weight: 1
-          },
-          301: {
-            fill: true,
-            fillOpacity: 0.5,
-            fillColor: '#ff9900',
-            color: '#cc7a00',
-            radius: 10,
-            weight: 1
-          },
-          601: {
-            fill: true,
-            fillOpacity: 0.5,
-            fillColor: '#b37700',
-            color: '#805500',
-            radius: 10,
-            weight: 1
-          },
-          1201: {
-            fill: true,
-            fillOpacity: 0.5,
-            fillColor: '#000000',
-            color: '#000000',
-            radius: 10,
-            weight: 1
-          },
-          1801: {
-            fill: true,
-            fillOpacity: 0.5,
-            fillColor: '#cccccc',
-            color: '#999999',
-            radius: 10,
-            weight: 1
-          },
-          2401: {
-            fill: true,
-            fillOpacity: 0.5,
-            fillColor: '#3385ff',
-            color: '#0047b3',
-            radius: 10,
-            weight: 1
-          },
-          3001: {
-            fill: true,
-            fillOpacity: 0.5,
-            fillColor: '#b3d9ff',
-            color: '#0066cc',
-            radius: 10,
-            weight: 1
-          },
-          3601: {
-            fill: true,
-            fillOpacity: 0.5,
-            fillColor: '#ffffff',
-            color: '#000000',
-            radius: 10,
-            weight: 1
-          },
-          10001: {
-            fill: true,
-            fillOpacity: 0.5,
-            fillColor: '#ffffff',
-            color: '#000000',
-            radius: 10,
-            weight: 1
-          },
-          50001: {
-            fill: true,
-            fillOpacity: 0.5,
-            fillColor: '#ffffff',
-            color: '#000000',
-            radius: 10,
-            weight: 1
+            0: {
+              fill: true,
+              fillOpacity: 0.5,
+              fillColor: '#ffff00',
+              color: '#999900',
+              radius: 10,
+              weight: 1
+            },
+            61: {
+              fill: true,
+              fillOpacity: 0.5,
+              fillColor: '#ff0000',
+              color: '#990000',
+              radius: 10,
+              weight: 1
+            },
+            301: {
+              fill: true,
+              fillOpacity: 0.5,
+              fillColor: '#ff9900',
+              color: '#cc7a00',
+              radius: 10,
+              weight: 1
+            },
+            601: {
+              fill: true,
+              fillOpacity: 0.5,
+              fillColor: '#b37700',
+              color: '#805500',
+              radius: 10,
+              weight: 1
+            },
+            1201: {
+              fill: true,
+              fillOpacity: 0.5,
+              fillColor: '#000000',
+              color: '#000000',
+              radius: 10,
+              weight: 1
+            },
+            1801: {
+              fill: true,
+              fillOpacity: 0.5,
+              fillColor: '#cccccc',
+              color: '#999999',
+              radius: 10,
+              weight: 1
+            },
+            2401: {
+              fill: true,
+              fillOpacity: 0.5,
+              fillColor: '#3385ff',
+              color: '#0047b3',
+              radius: 10,
+              weight: 1
+            },
+            3001: {
+              fill: true,
+              fillOpacity: 0.5,
+              fillColor: '#b3d9ff',
+              color: '#0066cc',
+              radius: 10,
+              weight: 1
+            },
+            3601: {
+              fill: true,
+              fillOpacity: 0.5,
+              fillColor: '#ffffff',
+              color: '#000000',
+              radius: 10,
+              weight: 1
+            },
+            10001: {
+              fill: true,
+              fillOpacity: 0.5,
+              fillColor: '#ffffff',
+              color: '#000000',
+              radius: 10,
+              weight: 1
+            },
+            50001: {
+              fill: true,
+              fillOpacity: 0.5,
+              fillColor: '#ffffff',
+              color: '#000000',
+              radius: 10,
+              weight: 1
+            }
           }
-        }
         }
       }
     };

@@ -1,16 +1,14 @@
 <template></template>
 
 <script>
-  import EventsSocket from '../../core/socket'
-  import EventsOverlay from '../../core/layers/EventsOverlay'
+  import NgwEventsOverlay from '../../core/layers/NgwEventsOverlay'
 
   export default {
-    name: 'RgEventsLayer',
+    name: 'NgwEventsLayer',
     mounted() {
       const map = this.$parent.map
-      const eventsSocket = new EventsSocket()
-      const eventsOveray = new EventsOverlay(eventsSocket, window.grozaConfig.settings.eventsStyles)
-      map.addLayer(eventsOveray)
+      const ngwEventsOverlay = new NgwEventsOverlay(window.grozaConfig.settings.eventsStyles)
+      map.addLayer(ngwEventsOverlay)
     }
   }
 </script>
