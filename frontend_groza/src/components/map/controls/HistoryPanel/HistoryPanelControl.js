@@ -18,7 +18,7 @@ export default L.Control.extend({
       L.DomEvent.disableClickPropagation(container);
       L.DomEvent.on(container, 'mousewheel touchstart', L.DomEvent.stopPropagation);
     } else {
-      L.DomEvent.on(container, 'click dblclick mousewheel mousedown', L.DomEvent.stopPropagation);
+      L.DomEvent.on(container, 'click dblclick mousewheel mousedown touchstart', L.DomEvent.stopPropagation);
     }
 
     return this;
