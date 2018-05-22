@@ -36,10 +36,9 @@ def setup_pyramid(comp, config):
         '/api/groza/login'
     ).add_view(login, request_method='POST', renderer='json')
 
-    config.add_route(
-        'nextgisweb_groza.api.events',
-        '/api/groza/events/'
-    ).add_view(receive_events, request_method='POST', renderer='json')
+    config.add_route('nextgisweb_groza.api.events', '/api/groza/events/') \
+        .add_view(get_events, request_method='GET', renderer='json') \
+        .add_view(receive_events, request_method='POST', renderer='json')
 
     config.add_route(
         'nextgisweb_groza.api.webmap',
