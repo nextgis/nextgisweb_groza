@@ -5,12 +5,14 @@ from nextgisweb.env import env
 from nextgisweb_groza.util import _
 from response import *
 from pyramid.httpexceptions import HTTPBadRequest
-from nextgisweb_groza.default_settings import eventsStyles
+from nextgisweb_groza.default_settings import default_events_styles, default_types_styles
 
 SETTINGS_MODULE_KEY = 'groza'
 ELLIPSE_ZOOM_VISIBLE = 'ellipse_z_visible'
 GROZA_WEB_MAP = 'web_map'
 EVENTS_STYLES = 'eventsStyles'
+TYPES_STYLES = 'types'
+EXPIRE_STYLES = 'expired'
 
 
 def groza_settings(request):
@@ -34,13 +36,18 @@ def get_settings():
         env.core.settings_set(SETTINGS_MODULE_KEY, GROZA_WEB_MAP, None)
         settings[GROZA_WEB_MAP] = None
 
+    settings[EVENTS_STYLES] = dict()
+
     try:
         events_styles_str = env.core.settings_get(SETTINGS_MODULE_KEY, EVENTS_STYLES)
-        settings[EVENTS_STYLES] = json.loads(events_styles_str)
+        settings[EVENTS_STYLES][EXPIRE_STYLES] = json.loads(events_styles_str)
     except KeyError:
-        events_styles_str = json.dumps(eventsStyles)
+        events_styles_str = json.dumps(default_events_styles)
         env.core.settings_set(SETTINGS_MODULE_KEY, EVENTS_STYLES, events_styles_str)
-        settings[EVENTS_STYLES] = eventsStyles
+        settings[EVENTS_STYLES][EXPIRE_STYLES] = default_events_styles
+
+    settings[EVENTS_STYLES][TYPES_STYLES] = default_types_styles
+
     return settings
 
 
