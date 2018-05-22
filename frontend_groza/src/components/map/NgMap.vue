@@ -6,7 +6,6 @@
 
 <script>
   import {IMAGE_ADAPTER_URL, NGW_WEB_MAP} from '../../store/actions/ngw'
-  import PanelControl from '../../core/controls/Panel'
 
   export default {
     name: 'NgMap',
@@ -40,9 +39,6 @@
             } else {
               // todo: handle unsuccessful result
             }
-
-            const panel = new PanelControl({position: 'topright'})
-            panel.addTo(this.map)
 
             this.ready = true
           })

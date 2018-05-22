@@ -2,7 +2,8 @@
   <v-container fluid grid-list-md>
     <v-flex xs12>
       <v-card>
-        <v-card-title><h4>{{ event.ampl != 0 ? 'Молния &laquo;облако-земля&raquo;' : 'Облачная молния '}}</h4></v-card-title>
+        <v-card-title><h4>{{ event.ampl != 0 ? 'Молния &laquo;облако-земля&raquo;' : 'Облачная молния '}}</h4>
+        </v-card-title>
         <v-divider></v-divider>
         <v-list dense>
           <v-list-tile>
@@ -41,7 +42,7 @@
 </script>
 
 <style scoped>
-.container {
-  width: 500px;
-}
+  .container {
+    width: 500px;
+  }
 </style>
