@@ -1,8 +1,10 @@
 import datetime
 
 import geoalchemy2 as ga
-from marshmallow import Schema, fields, post_load
+from marshmallow import Schema, fields, post_load, pre_dump
 from model import Event
+from shapely import wkb
+import calendar
 
 
 class EventSchema(Schema):
@@ -39,6 +41,24 @@ class EventSchema(Schema):
             ellipse_major_ax=item['ell_maj'],
             ellipse_minor_ax=item['ell_min'],
             ellipse_azimuth=item['ell_az']
+        )
+
+    @pre_dump
+    def pre_dump(self, event_item):
+        location = wkb.loads(bytes(event_item.location.data))
+        return dict(
+            id=event_item.event_id,
+            ligh_t=event_item.lighting_type,
+            ev_t=event_item.event_type,
+            ampl=event_item.amplitude,
+            lm_ts=calendar.timegm(event_item.last_modified_ts.utctimetuple()),
+            ev_ts=calendar.timegm(event_item.event_ts.utctimetuple()),
+            lat=location.y,
+            lon=location.x,
+            alt=location.z,
+            ell_maj=event_item.ellipse_major_ax,
+            ell_min=event_item.ellipse_minor_ax,
+            ell_az=event_item.ellipse_azimuth
         )
 
 
