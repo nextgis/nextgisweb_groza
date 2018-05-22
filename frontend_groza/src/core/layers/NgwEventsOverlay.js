@@ -15,8 +15,8 @@ const NgwEventsOverlay = L.FeatureGroup.extend({
   },
 
   addEvent: function (eventItem) {
-    const lightTypeStyle = this._styles.types[eventItem.ligh_t]
-    const circleMarker = new ShapeMarker([eventItem.lat, eventItem.lon], lightTypeStyle)
+    const lightTypeStyle = this._styles.types[eventItem.ligh_t];
+    const circleMarker = new ShapeMarker([eventItem.lat, eventItem.lon], lightTypeStyle);
     circleMarker._grozaEvent = eventItem;
     circleMarker._grozaId = eventItem.id;
     this.addLayer(circleMarker);
@@ -26,20 +26,20 @@ const NgwEventsOverlay = L.FeatureGroup.extend({
       const marker = this;
       const map = marker._map;
 
-      const EventPopupClass = Vue.extend(EventPopup)
+      const EventPopupClass = Vue.extend(EventPopup);
       const instance = new EventPopupClass({
         propsData: {
           event: this._grozaEvent
         }
-      })
-      instance.$mount()
-      const htmlEl = instance.$el
+      });
+      instance.$mount();
+      const htmlEl = instance.$el;
 
       const popup = L.popup({
         maxWidth: 300
       })
         .setLatLng(marker.getLatLng())
-        .setContent(htmlEl)
+        .setContent(htmlEl);
 
       map.openPopup(popup);
       that._popup = popup;
@@ -62,8 +62,9 @@ const NgwEventsOverlay = L.FeatureGroup.extend({
     const that = this;
     EventBus.$on('UPDATE_HISTORY_EVENTS', function (startEndInfo) {
       store.dispatch(NGW_GET_EVENTS, startEndInfo).then((httpAnswer) => {
-        const result = httpAnswer.data
+        const result = httpAnswer.data;
         if (result.success) {
+          that.clearLayers();
           that.addEvents(result.data);
         } else {
           // todo: handle unsuccessful result
