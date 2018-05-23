@@ -2,6 +2,7 @@ import {setOptions} from 'leaflet'
 import ShapeMarker from '../layers/L.ShapeMarker'
 import EventPopup from '../../components/map/EventPopup'
 import Vue from 'vue'
+import EventBus from '../../event-bus'
 
 const EventsOverlay = L.FeatureGroup.extend({
   initialize: function (eventsSocket, styles, options) {
@@ -15,12 +16,14 @@ const EventsOverlay = L.FeatureGroup.extend({
   addEvent: function (eventItem) {
     const expireStyle = this._styles.expired[eventItem.rule]
     const lightTypeStyle = this._styles.types[eventItem.ligh_t]
-    const resultStyle = {}
+    const options = {
+      className: `ligh_t_${eventItem.ligh_t}`
+    }
 
-    Object.assign(resultStyle, lightTypeStyle)
-    Object.assign(resultStyle, expireStyle)
+    Object.assign(options, lightTypeStyle)
+    Object.assign(options, expireStyle)
 
-    const circleMarker = new ShapeMarker([eventItem.lat, eventItem.lon], resultStyle)
+    const circleMarker = new ShapeMarker([eventItem.lat, eventItem.lon], options)
 
     circleMarker._grozaEvent = eventItem;
     circleMarker._grozaId = eventItem.id;
@@ -53,6 +56,19 @@ const EventsOverlay = L.FeatureGroup.extend({
     });
   },
 
+  hideCloudEvents() {
+    const sheet = document.createElement('style');
+    sheet.innerHTML = 'path.ligh_t_0 { display: none; }';
+    this._sheetElement = document.body.appendChild(sheet);
+  },
+
+  showCloudEvents() {
+    if (this._sheetElement) {
+      document.body.removeChild(this._sheetElement);
+    }
+    this._sheetElement = null;
+  },
+
   addEvents: function (eventItems) {
     for (let eventItem of eventItems) {
       this.addEvent(eventItem);
@@ -67,6 +83,14 @@ const EventsOverlay = L.FeatureGroup.extend({
     const that = this;
     this._eventsSocket.getEvents().then((eventsItems) => {
       that.addEvents(eventsItems);
+    });
+
+    EventBus.$on('HIDE_CLOUD_EVENTS', () => {
+      this.hideCloudEvents();
+    });
+
+    EventBus.$on('SHOW_CLOUD_EVENTS', () => {
+      this.showCloudEvents();
     });
   }
 });

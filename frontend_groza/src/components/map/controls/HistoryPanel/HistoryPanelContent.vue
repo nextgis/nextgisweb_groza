@@ -35,7 +35,7 @@
               <v-switch
                 :title="'Облачные молнии'"
                 v-model="switchCloud"
-                v-on:change="onChange()"
+                v-on:change="onSwitchCloud()"
               ></v-switch>
             </v-list-tile-action>
           </v-list-tile>
@@ -113,8 +113,12 @@
       goToMonitoring() {
         router.push('/')
       },
-      onChange() {
-        console.log()
+      onSwitchCloud() {
+        if (this.switchCloud) {
+          EventBus.$emit('SHOW_CLOUD_EVENTS');
+        } else {
+          EventBus.$emit('HIDE_CLOUD_EVENTS');
+        }
       },
       applyTimeRange() {
         this.timeRangeDialog = false

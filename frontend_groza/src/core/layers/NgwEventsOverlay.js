@@ -16,7 +16,11 @@ const NgwEventsOverlay = L.FeatureGroup.extend({
 
   addEvent: function (eventItem) {
     const lightTypeStyle = this._styles.types[eventItem.ligh_t];
-    const circleMarker = new ShapeMarker([eventItem.lat, eventItem.lon], lightTypeStyle);
+    const options = {
+      className: `ligh_t_${eventItem.ligh_t}`
+    };
+    Object.assign(options, lightTypeStyle);
+    const circleMarker = new ShapeMarker([eventItem.lat, eventItem.lon], options);
     circleMarker._grozaEvent = eventItem;
     circleMarker._grozaId = eventItem.id;
     this.addLayer(circleMarker);
@@ -48,6 +52,19 @@ const NgwEventsOverlay = L.FeatureGroup.extend({
     });
   },
 
+  hideCloudEvents() {
+    const sheet = document.createElement('style');
+    sheet.innerHTML = 'path.ligh_t_0 { display: none; }';
+    this._sheetElement = document.body.appendChild(sheet);
+  },
+
+  showCloudEvents() {
+    if (this._sheetElement) {
+      document.body.removeChild(this._sheetElement);
+    }
+    this._sheetElement = null;
+  },
+
   addEvents: function (eventItems) {
     for (let eventItem of eventItems) {
       this.addEvent(eventItem);
@@ -70,6 +87,14 @@ const NgwEventsOverlay = L.FeatureGroup.extend({
           // todo: handle unsuccessful result
         }
       })
+    });
+
+    EventBus.$on('HIDE_CLOUD_EVENTS', () => {
+      this.hideCloudEvents();
+    });
+
+    EventBus.$on('SHOW_CLOUD_EVENTS', () => {
+      this.showCloudEvents();
     });
   }
 });

@@ -30,7 +30,7 @@
               <v-switch
                 :label="'Облачные молнии'"
                 v-model="switchCloud"
-                v-on:change="onChange()"
+                v-on:change="onSwitchCloud()"
               ></v-switch>
             </v-flex>
           </v-layout>
@@ -42,6 +42,7 @@
 
 <script>
   import router from '../../../../router/index'
+  import EventBus from '../../../../event-bus'
 
   export default {
     name: 'MonitoringPanelContent',
@@ -58,8 +59,12 @@
       goToHistory() {
         router.push('/history')
       },
-      onChange() {
-        console.log()
+      onSwitchCloud() {
+        if (this.switchCloud) {
+          EventBus.$emit('SHOW_CLOUD_EVENTS');
+        } else {
+          EventBus.$emit('HIDE_CLOUD_EVENTS');
+        }
       }
     }
   }
