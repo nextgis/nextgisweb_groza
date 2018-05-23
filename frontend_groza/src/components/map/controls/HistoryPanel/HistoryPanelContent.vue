@@ -14,66 +14,95 @@
           @click.native="onChangeClosed()"></v-toolbar-side-icon>
         <v-toolbar-title class="white--text">Архив данных</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn icon
+        <v-btn class="info" icon
                title="В режим Диспетчера"
                @click.native="goToMonitoring()">
           <v-icon>track_changes</v-icon>
         </v-btn>
       </v-toolbar>
       <v-card>
-        <v-container
-          fluid
-          style="min-height: 0;"
-          grid-list-lg>
-          <v-layout row wrap>
-            <v-flex xs12>
+
+        <v-list two-line>
+          <v-list-tile @click="">
+            <v-list-tile-action>
+              <v-icon>cloud_circle</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>Облачные молнии</v-list-tile-title>
+              <v-list-tile-sub-title>Отображение облачных молний</v-list-tile-sub-title>
+            </v-list-tile-content>
+            <v-list-tile-action>
               <v-switch
-                :label="'Облачные молнии'"
+                :title="'Облачные молнии'"
                 v-model="switchCloud"
                 v-on:change="onChange()"
               ></v-switch>
-            </v-flex>
-            <v-flex xs12 class="date-range-selector">
-              <flat-pickr
-                value=""
-                v-model="date"
-                @on-change="onRangeChanged"
-                :config="config">
-              </flat-pickr>
-            </v-flex>
-          </v-layout>
-        </v-container>
+            </v-list-tile-action>
+          </v-list-tile>
+          <v-divider inset></v-divider>
+
+          <v-list-tile @click="">
+            <v-list-tile-action>
+              <v-icon>date_range</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>Период времени</v-list-tile-title>
+              <v-list-tile-sub-title>{{ dateSubTitle }}</v-list-tile-sub-title>
+            </v-list-tile-content>
+            <v-list-tile-action>
+              <v-btn class="info" flat icon
+                     @click.stop="timeRangeDialog = true">
+                <v-icon>date_range</v-icon>
+              </v-btn>
+            </v-list-tile-action>
+          </v-list-tile>
+        </v-list>
       </v-card>
+      <v-dialog v-model="timeRangeDialog" max-width="500px">
+        <v-card>
+          <v-card-title>
+            Настройка периода времени
+          </v-card-title>
+          <v-card-text>
+            <range-selector
+              ref="rangeSelector"
+            ></range-selector>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="success" flat @click.stop="applyTimeRange()">Применить</v-btn>
+            <v-btn color="info" flat @click.stop="timeRangeDialog=false">Отмена</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </div>
   </div>
 
 </template>
 
 <script>
-  import flatPickr from '../../../controls/VueFlatpickr'
+  import RangeSelector from '../../../controls/RangeSelector.vue'
   import 'flatpickr/dist/flatpickr.css'
-  import {Russian} from 'flatpickr/dist/l10n/ru'
-  import moment from 'moment'
   import router from '../../../../router/index'
+  import moment from 'moment'
   import EventBus from '../../../../event-bus'
 
   export default {
     name: 'HistoryPanelContent',
-    components: {flatPickr},
+    components: {RangeSelector},
+    props: {
+      formatDate: {
+        default: 'YYYY.MM.DD hh:mm',
+        type: String
+      }
+    },
     map: null,
     data() {
       return {
+        timeRangeDialog: false,
         date: null,
+        dateSubTitle: 'Настройка периода времени',
         closed: false,
-        config: {
-          mode: 'range',
-          altFormat: 'Y/m/d',
-          altInput: true,
-          dateFormat: 'Y-m-d',
-          locale: Russian,
-          enableTime: false,
-          defaultHour: 0
-        },
         switchCloud: true
       }
     },
@@ -87,14 +116,18 @@
       onChange() {
         console.log()
       },
-      onRangeChanged(dates) {
-        if (dates.length !== 2) return false
-        console.log(dates)
-        const start = moment.utc(dates[0]).format()
-        const end = moment.utc(dates[1]).add(1, 'days').format()
+      applyTimeRange() {
+        this.timeRangeDialog = false
+        const selectedDates = this.$refs.rangeSelector.getSelectedDates()
+        if (!selectedDates) return false
+        const start = moment(selectedDates[0]).format(this.formatDate)
+        const end = moment(selectedDates[1]).format(this.formatDate)
+        this.dateSubTitle = `${start} - ${end}`
+        const startUtc = moment.utc(selectedDates[0]).format()
+        const endUtc = moment.utc(selectedDates[1]).format()
         EventBus.$emit('UPDATE_HISTORY_EVENTS', {
-          start: start,
-          end: end
+          start: startUtc,
+          end: endUtc
         });
       }
     }

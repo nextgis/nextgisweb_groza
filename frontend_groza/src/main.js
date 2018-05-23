@@ -22,7 +22,8 @@ Vue.component('split-pane', VueSplitPane);
 
 Vue.use(Vuetify, {
   theme: {
-    primary: '#016fc5'
+    primary: '#016fc5',
+    success: '#4CAF50'
   }
 })
 
