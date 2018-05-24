@@ -1,14 +1,22 @@
 <template></template>
 
 <script>
-  import NgwEventsOverlay from '../../core/layers/NgwEventsOverlay'
+  import NgwEventsLayer from '../../core/layers/NgwEventsLayer'
 
   export default {
     name: 'NgwEventsLayer',
+    data() {
+      return {
+        ngwEventsLayer: null
+      }
+    },
     mounted() {
       const map = this.$parent.map
-      const ngwEventsOverlay = new NgwEventsOverlay(window.grozaConfig.settings.eventsStyles)
-      map.addLayer(ngwEventsOverlay)
+      this.ngwEventsLayer = new NgwEventsLayer(window.grozaConfig.settings.eventsStyles)
+      map.addLayer(this.ngwEventsLayer)
+    },
+    beforeDestroy() {
+      this.ngwEventsLayer.destroy()
     }
   }
 </script>

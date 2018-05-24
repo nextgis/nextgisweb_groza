@@ -2,15 +2,23 @@
 
 <script>
   import EventsSocket from '../../core/socket'
-  import EventsOverlay from '../../core/layers/EventsOverlay'
+  import RgEventsLayer from '../../core/layers/RgEventsLayer'
 
   export default {
     name: 'RgEventsLayer',
+    data() {
+      return {
+        rgEventsLayer: null
+      }
+    },
     mounted() {
       const map = this.$parent.map
       const eventsSocket = new EventsSocket()
-      const eventsOveray = new EventsOverlay(eventsSocket, window.grozaConfig.settings.eventsStyles)
-      map.addLayer(eventsOveray)
+      this.rgEventsLayer = new RgEventsLayer(eventsSocket, window.grozaConfig.settings.eventsStyles)
+      map.addLayer(this.rgEventsLayer)
+    },
+    beforeDestroy() {
+      this.rgEventsLayer.destroy()
     }
   }
 </script>

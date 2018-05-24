@@ -1,4 +1,4 @@
-import * as L from 'leaflet'
+import L from 'leaflet'
 
 L.SVG.include({
   _updateShape: function _updateShape(layer) {
