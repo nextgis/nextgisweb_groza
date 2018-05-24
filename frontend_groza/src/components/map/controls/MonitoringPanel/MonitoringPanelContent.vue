@@ -21,20 +21,24 @@
         </v-btn>
       </v-toolbar>
       <v-card>
-        <v-container
-          fluid
-          style="min-height: 0;"
-          grid-list-lg>
-          <v-layout row wrap>
-            <v-flex xs12>
+        <v-list two-line>
+          <v-list-tile @click="">
+            <v-list-tile-action>
+              <v-icon>cloud_circle</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>Облачные молнии</v-list-tile-title>
+              <v-list-tile-sub-title>Отображение облачных молний</v-list-tile-sub-title>
+            </v-list-tile-content>
+            <v-list-tile-action>
               <v-switch
-                :label="'Облачные молнии'"
+                :title="'Облачные молнии'"
                 v-model="switchCloud"
                 v-on:change="onSwitchCloud()"
               ></v-switch>
-            </v-flex>
-          </v-layout>
-        </v-container>
+            </v-list-tile-action>
+          </v-list-tile>
+        </v-list>
       </v-card>
     </div>
   </div>
