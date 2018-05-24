@@ -1,20 +1,28 @@
 import L from 'leaflet'
 import EventBus from '../../event-bus'
+
 import EventsLayer from './EventsLayer'
+import EllipsesLayer from './EllipsesLayer';
 
 const RgEventsLayer = L.LayerGroup.extend({
-  initialize: function (eventsSocket, styles, options) {
+  initialize: function (eventsSocket, grozaSettings, options) {
     this._layers = {};
     this._eventsSocket = eventsSocket;
-    this._styles = styles;
+    this._grozaSettings = grozaSettings;
     this._listeners = [];
     L.setOptions(this, options);
     this._buildEventsLayer();
+    this._buildEllipsesLayer();
   },
 
   _buildEventsLayer: function () {
-    this._eventsLayer = new EventsLayer(this._styles, this.getEventMarkerOptions);
+    this._eventsLayer = new EventsLayer(this._grozaSettings.eventsStyles, this.getEventMarkerOptions);
     this.addLayer(this._eventsLayer);
+  },
+
+  _buildEllipsesLayer: function () {
+    this._ellipsesLayer = new EllipsesLayer(this._grozaSettings);
+    this.addLayer(this._ellipsesLayer);
   },
 
   getEventMarkerOptions: function (eventItem) {
@@ -37,6 +45,7 @@ const RgEventsLayer = L.LayerGroup.extend({
     const that = this;
     this._eventsSocket.getEvents().then((eventsItems) => {
       that._eventsLayer.addEvents(eventsItems);
+      that._ellipsesLayer.addEvents(eventsItems);
     });
 
     let listener;
@@ -61,6 +70,7 @@ const RgEventsLayer = L.LayerGroup.extend({
       listener.$off();
     });
     this._eventsLayer.destroy();
+    this._ellipsesLayer.destroy();
   }
 });
 

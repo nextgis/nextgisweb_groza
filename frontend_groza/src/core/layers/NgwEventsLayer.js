@@ -1,21 +1,29 @@
 import L from 'leaflet';
 import EventBus from '../../event-bus';
-import EventsLayer from './EventsLayer';
 import store from '../../store/index';
 import {NGW_GET_EVENTS} from '../../store/actions/ngw';
 
+import EventsLayer from './EventsLayer';
+import EllipsesLayer from './EllipsesLayer';
+
 const NgwEventsLayer = L.LayerGroup.extend({
-  initialize: function (styles, options) {
+  initialize: function (grozaSettings, options) {
     this._layers = {};
-    this._styles = styles;
+    this._grozaSettings = grozaSettings;
     this._listeners = [];
     L.setOptions(this, options);
     this._buildEventsLayer();
+    this._buildEllipsesLayer();
   },
 
   _buildEventsLayer: function () {
-    this._eventsLayer = new EventsLayer(this._styles, this.getEventMarkerOptions);
+    this._eventsLayer = new EventsLayer(this._grozaSettings.eventsStyles, this.getEventMarkerOptions);
     this.addLayer(this._eventsLayer);
+  },
+
+  _buildEllipsesLayer: function () {
+    this._ellipsesLayer = new EllipsesLayer(this._grozaSettings);
+    this.addLayer(this._ellipsesLayer);
   },
 
   getEventMarkerOptions: function (eventItem, styles) {
@@ -51,6 +59,7 @@ const NgwEventsLayer = L.LayerGroup.extend({
         if (result.success) {
           that.clearLayers();
           that._eventsLayer.addEvents(result.data);
+          that._ellipsesLayer.addEvents(result.data);
         } else {
           // todo: handle unsuccessful result
         }
@@ -78,6 +87,7 @@ const NgwEventsLayer = L.LayerGroup.extend({
       listener.$off();
     });
     this._eventsLayer.destroy();
+    this._ellipsesLayer.destroy();
   }
 });
 

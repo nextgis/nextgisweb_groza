@@ -12,7 +12,7 @@
     },
     mounted() {
       const map = this.$parent.map
-      this.ngwEventsLayer = new NgwEventsLayer(window.grozaConfig.settings.eventsStyles)
+      this.ngwEventsLayer = new NgwEventsLayer(window.grozaConfig.settings)
       map.addLayer(this.ngwEventsLayer)
     },
     beforeDestroy() {
