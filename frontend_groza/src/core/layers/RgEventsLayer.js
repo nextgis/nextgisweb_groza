@@ -13,6 +13,8 @@ const RgEventsLayer = L.LayerGroup.extend({
     L.setOptions(this, options);
     this._buildEventsLayer();
     this._buildEllipsesLayer();
+    this._ellipsesLayer.bringToFront();
+    this._eventsLayer.bringToFront();
   },
 
   _buildEventsLayer: function () {

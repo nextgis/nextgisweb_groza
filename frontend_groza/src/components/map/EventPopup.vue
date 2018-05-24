@@ -1,14 +1,22 @@
 <template>
   <v-container fluid grid-list-md>
     <v-flex xs12>
+      <v-toolbar color="blue">
+        <v-toolbar-title class="body-2 white--text">
+          {{ event.ampl != 0 ? 'Молния &laquo;облако-земля&raquo;' : 'Облачная молния '}}
+        </v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn class="info" icon
+               title="В режим Диспетчера"
+               v-on:click.native="closeCallback()">
+          <v-icon>close</v-icon>
+        </v-btn>
+      </v-toolbar>
       <v-card>
-        <v-card-title><h4>{{ event.ampl != 0 ? 'Молния &laquo;облако-земля&raquo;' : 'Облачная молния '}}</h4>
-        </v-card-title>
-        <v-divider></v-divider>
         <v-list dense>
           <v-list-tile>
             <v-list-tile-content>Дата</v-list-tile-content>
-            <v-list-tile-content class="align-end">{{ moment(new Date(event.ev_ts*1000)).format('YYYY/MM/DD') }}
+            <v-list-tile-content class="align-end">{{ moment(new Date(event.ev_ts*1000)).format('YYYY.MM.DD') }}
             </v-list-tile-content>
           </v-list-tile>
           <v-list-tile>
@@ -37,7 +45,10 @@
 <script>
   export default {
     name: 'EventPopup',
-    props: ['event']
+    props: ['event', 'closeCallback'],
+    beforeDestroy() {
+      console.log(this);
+    }
   }
 </script>
 

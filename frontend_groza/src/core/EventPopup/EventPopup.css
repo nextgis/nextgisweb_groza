@@ -1,0 +1,12 @@
+div.leaflet-popup.eventPopup .leaflet-popup-content-wrapper {
+  border-radius: 0;
+  padding: 0;
+}
+
+div.leaflet-popup.eventPopup .leaflet-popup-content {
+  margin: 0;
+}
+
+div.leaflet-popup.eventPopup .container.grid-list-md {
+  padding: 0;
+}

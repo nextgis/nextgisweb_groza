@@ -1,7 +1,6 @@
 import L from 'leaflet';
 import ShapeMarker from './L.ShapeMarker';
-import EventPopup from '../../components/map/EventPopup';
-import Vue from 'vue';
+import EventPopup from '../EventPopup/EventPopup';
 
 const EventsLayer = L.FeatureGroup.extend({
   initialize: function (styles, getEventMarkerOptions, options) {
@@ -24,20 +23,9 @@ const EventsLayer = L.FeatureGroup.extend({
       const marker = this;
       const map = marker._map;
 
-      const EventPopupClass = Vue.extend(EventPopup)
-      const instance = new EventPopupClass({
-        propsData: {
-          event: this._grozaEvent
-        }
-      });
-      instance.$mount();
-      const htmlEl = instance.$el;
-
-      const popup = L.popup({
+      const popup = new EventPopup({
         maxWidth: 300
-      })
-        .setLatLng(marker.getLatLng())
-        .setContent(htmlEl);
+      }, this._grozaEvent).setLatLng(marker.getLatLng());
 
       map.openPopup(popup);
       that._popup = popup;
