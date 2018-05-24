@@ -70,7 +70,7 @@ def periodic_collect():
         start=ts_to_iso_8601(last_update_ts),
         end=ts_to_iso_8601(current_ts)
     ))
-    periodic_pull_events(last_update_ts, current_ts)
+    periodic_pull_events(last_update_ts + 1, current_ts)
     return True
 
 
