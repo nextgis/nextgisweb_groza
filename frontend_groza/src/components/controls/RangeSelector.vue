@@ -34,6 +34,9 @@
           })
         ]
       })
+    },
+    beforeDestroy() {
+      this._flatpickr.destroy();
     }
   }
 </script>
