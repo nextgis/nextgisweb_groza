@@ -14,7 +14,7 @@
           @click.native="onChangeClosed()"></v-toolbar-side-icon>
         <v-toolbar-title class="white--text">Диспетчер</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn icon
+        <v-btn class="info" icon
                title="Открыть архив данных"
                @click.native="goToHistory()">
           <v-icon>history</v-icon>
