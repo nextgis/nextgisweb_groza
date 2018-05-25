@@ -118,3 +118,11 @@ default_types_styles = {
         'weight': 1
     }
 }
+
+default_ellipse_style = {
+    'fill': False,
+    'fillOpacity': 0.9,
+    'fillColor': '#ffffff',
+    'color': '#ff0006',
+    'weight': 1
+}
