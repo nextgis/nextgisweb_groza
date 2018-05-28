@@ -12,6 +12,7 @@ class Config():
     repeat_delay = None
     chunk_pulling_period = None
     active_monitoring_period = None
+    clipping_shp_path = None
 
     @staticmethod
     def init():
@@ -76,3 +77,11 @@ class Config():
         active_monitoring_period = Config.config.get(section_name, 'active_monitoring_period_sec')
         Config.active_monitoring_period = int(active_monitoring_period)
         return Config.active_monitoring_period
+
+    @staticmethod
+    def get_clipping_shp_path():
+        if Config.clipping_shp_path:
+            return Config.clipping_shp_path
+        clipping_shp_path = Config.config.get(section_name, 'clipping_shp_path')
+        Config.clipping_shp_path = clipping_shp_path
+        return Config.clipping_shp_path

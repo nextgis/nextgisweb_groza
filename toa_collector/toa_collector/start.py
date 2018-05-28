@@ -1,6 +1,7 @@
 from apscheduler.schedulers.blocking import BlockingScheduler
 from config import Config
 from toa_collector.facades import *
+from toa_collector.processing import *
 from utils import get_now_utc_ts, get_timedelta_sec_from_ts, ts_to_iso_8601
 from log import info
 
@@ -90,6 +91,7 @@ def main():
     NgwFacade.init(Config)
     ToaFacade.init(Config)
     RgFacade.init(Config)
+    Clip.init(Config)
     run()
 
 

@@ -6,7 +6,9 @@ requires = (
     'apscheduler',
     'requests',
     'redis',
-    'marshmallow'
+    'marshmallow',
+    'pyshp',
+    'shapely'
 )
 
 setup(
