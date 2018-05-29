@@ -8,6 +8,7 @@ from log import info
 
 def pull_old_events(ts_start, ts_stop):
     get_events_result = ToaFacade.collect(ts_start, ts_stop)
+    Clip.clip(get_events_result)
     if get_events_result:
         success_result = NgwFacade.send_events_to_ngw(get_events_result)
         if not success_result:
@@ -38,11 +39,13 @@ def handle_last_interval(current_ts):
 def init_redis(current_ts):
     ts_start = current_ts - Config.get_active_monitoring_period()
     get_events_result = ToaFacade.collect(ts_start, current_ts)
+    Clip.clip(get_events_result)
     RgFacade.init_events(get_events_result)
 
 
 def periodic_pull_events(ts_start, ts_stop):
     get_events_result = ToaFacade.collect(ts_start, ts_stop)
+    Clip.clip(get_events_result)
     if get_events_result:
         push_events_to_ngw(get_events_result)
         push_events_to_rg(get_events_result)

@@ -10,6 +10,12 @@ class GetEventsResult:
     def to_json(self):
         return json.dumps(self.to_dict())
 
+    def get_events(self):
+        return self.data
+
+    def set_events(self, new_events):
+        self.data = new_events
+
     def to_dict(self):
         return {
             'start': self.start,
