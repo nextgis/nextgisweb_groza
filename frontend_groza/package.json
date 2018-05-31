@@ -21,6 +21,7 @@
     "leaflet-ellipse": "^0.9.1",
     "leaflet-svg-shape-markers": "^1.0.0",
     "moment": "^2.22.1",
+    "proj4": "^2.4.4",
     "qs": "^6.5.1",
     "socket.io": "^2.1.0",
     "vue": "^2.5.2",

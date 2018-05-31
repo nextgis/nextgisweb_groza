@@ -21,6 +21,7 @@ const actions = {
     return http.get(`/api/groza/webmap/${webmapId}/`)
   },
   [IMAGE_ADAPTER_URL]: ({commit, dispatch}) => {
+    const baseUrl = http.defaults.baseURL
     return `${baseUrl}/api/component/render/image`
   },
   [NGW_GET_EVENTS]: ({commit, dispatch}, params) => {
