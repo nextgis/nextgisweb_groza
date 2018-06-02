@@ -54,7 +54,7 @@ define([
                 if (data.web_map) self.webMap.attr('value', {'id': data.web_map});
                 if (data.zone_1_class) self.zoneFirstClass.attr('value', {'id': data.zone_1_class});
                 if (data.zone_2_class) self.zoneSecondClass.attr('value', {'id': data.zone_2_class});
-                if (data.zone_3_class) self.zoneFirstClass.attr('value', {'id': data.zone_3_class});
+                if (data.zone_3_class) self.zoneThirdClass.attr('value', {'id': data.zone_3_class});
 
                 self.ellipseZoomVisible.attr('value', data.ellipse_z_visible);
             });
