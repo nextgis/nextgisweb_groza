@@ -13,13 +13,13 @@
     <script>
         window.grozaConfig = ${grozaConfig | json.dumps, n };
     </script>
-    <link href="${request.route_url('amd_package', subpath='ngw-groza/frontend/css/app.a449393e95d81d33f9823bca4ac57db9.css')}"
+    <link href="${request.route_url('amd_package', subpath='ngw-groza/frontend/css/app.7fa412236f33bf21d1d525af7fa06235.css')}"
           rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="app"></div>
 <script src="${request.route_url('amd_package', subpath='ngw-groza/frontend/js/manifest.0563134b714d88290c59.js')}"></script>
-<script src="${request.route_url('amd_package', subpath='ngw-groza/frontend/js/vendor.7aab313841254772ade7.js')}"></script>
-<script src="${request.route_url('amd_package', subpath='ngw-groza/frontend/js/app.bff42a05146a30697143.js')}"></script>
+<script src="${request.route_url('amd_package', subpath='ngw-groza/frontend/js/vendor.fdcc4b7ec91b5985fdfa.js')}"></script>
+<script src="${request.route_url('amd_package', subpath='ngw-groza/frontend/js/app.11349bdb245770e4ec40.js')}"></script>
 </body>
 </html>
