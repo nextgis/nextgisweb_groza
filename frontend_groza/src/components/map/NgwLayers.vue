@@ -2,8 +2,9 @@
 
 <script>
   import store from '../../store/index'
-  import {IMAGE_ADAPTER_URL} from '../../store/actions/ngw'
+  import {GET_NGW_TILE_ADAPTER_URL} from '../../store/actions/ngw'
   import NgwImageOverlay from '../../core/layers/NgwImageOverlay'
+  import NgwTileLayer from '../../core/layers/NgwTileLayer'
 
   export default {
     name: 'NgwLayers',
@@ -12,12 +13,12 @@
       const webMapInfo = this.$parent.webMapInfo
       const layersInfo = webMapInfo.layers
 
-      store.dispatch(IMAGE_ADAPTER_URL).then((url) => {
+      store.dispatch(GET_NGW_TILE_ADAPTER_URL).then((url) => {
         if (layersInfo) {
           for (const layerInfo of layersInfo) {
-            if (layerInfo.adapter !== 'ngw-webmap/ImageAdapter') continue
-            const ngwImageLayer = new NgwImageOverlay(url, layerInfo.styleId)
-            map.addLayer(ngwImageLayer)
+            if (layerInfo.adapter !== 'ngw-webmap/TileAdapter') continue
+              const ngwImageLayer = new NgwTileLayer(url, layerInfo.styleId)
+              map.addLayer(ngwImageLayer)
           }
         }
       })
