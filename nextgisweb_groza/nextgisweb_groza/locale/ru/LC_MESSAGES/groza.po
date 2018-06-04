@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-05-08 10:54+0300\n"
+"POT-Creation-Date: 2018-06-04 18:48+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -24,27 +24,55 @@ msgstr ""
 msgid "Web map"
 msgstr "Веб-карта"
 
-#: amd/ngw-groza/settings/GrozaSettings.hbs:16
+#: amd/ngw-groza/settings/GrozaSettings.hbs:17
+msgid "1 class zones layer"
+msgstr "Слой зон 1 класса"
+
+#: amd/ngw-groza/settings/GrozaSettings.hbs:23
+msgid "2 class zones layer"
+msgstr "Слой зон 2 класса"
+
+#: amd/ngw-groza/settings/GrozaSettings.hbs:29
+msgid "3 class zones layer"
+msgstr "Слой зон 3 класса"
+
+#: amd/ngw-groza/settings/GrozaSettings.hbs:34
 msgid "Displaying ellipses zoom"
 msgstr "Масштаб отображения эллипсов"
 
-#: amd/ngw-groza/settings/GrozaSettings.hbs:24
+#: amd/ngw-groza/settings/GrozaSettings.hbs:42
 msgid "Save"
 msgstr "Сохранить"
 
-#: amd/ngw-groza/settings/GrozaSettings.js:62
+#: amd/ngw-groza/settings/GrozaSettings.js:78
 msgid "Groza settings has been saved successfully!"
 msgstr "Настройки ГИС 'Гроза' усешно сохранены!"
 
-#: amd/ngw-groza/settings/GrozaSettings.js:64
+#: amd/ngw-groza/settings/GrozaSettings.js:80
 msgid "Error, Groza settings not has been saved!"
 msgstr "Ошибка, настройки ГИС 'Гроза' не были сохранены!"
 
-#: view/settings.py:16
+#: amd/ngw-groza/settings/GrozaSettings.js:86
+msgid "\"Web map\" is required field! Please, check it."
+msgstr "\"Веб-карта\" это обязательное поле! Заполните его."
+
+#: amd/ngw-groza/settings/GrozaSettings.js:90
+msgid "\"1 class zones layer\" is required field! Please, check it."
+msgstr "\"Слой зон 1 класса\" это обязательное поле! Заполните его."
+
+#: amd/ngw-groza/settings/GrozaSettings.js:94
+msgid "\"2 class zones layer\" is required field! Please, check it."
+msgstr "\"Слой зон 2 класса\" это обязательное поле! Заполните его."
+
+#: amd/ngw-groza/settings/GrozaSettings.js:98
+msgid "\"3 class zones layer\" is required field! Please, check it."
+msgstr "\"Слой зон 3 класса\" это обязательное поле! Заполните его."
+
+#: view/settings.py:24
 msgid "Groza settings"
 msgstr "ГИС Гроза"
 
-#: view/settings.py:53
+#: view/settings.py:87
 msgid "Groza"
 msgstr "Гроза"
 

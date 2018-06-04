@@ -87,15 +87,15 @@ define([
                 return false;
             }
             if (!this.zoneFirstClass.attr('value')) {
-                alert(i18n.gettext('"Zone 1 class" is required field! Please, check it.'));
+                alert(i18n.gettext('"1 class zones layer" is required field! Please, check it.'));
                 return false;
             }
             if (!this.zoneSecondClass.attr('value')) {
-                alert(i18n.gettext('"Zone 2 class" is required field! Please, check it.'));
+                alert(i18n.gettext('"2 class zones layer" is required field! Please, check it.'));
                 return false;
             }
             if (!this.zoneThirdClass.attr('value')) {
-                alert(i18n.gettext('"Zone 3 class" is required field! Please, check it.'));
+                alert(i18n.gettext('"3 class zones layer" is required field! Please, check it.'));
                 return false;
             }
             return true;
