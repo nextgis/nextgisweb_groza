@@ -33,8 +33,8 @@
             <v-list-tile-content class="align-end">{{ event.lon }}</v-list-tile-content>
           </v-list-tile>
           <v-list-tile>
-            <v-list-tile-content>Аплитуда, кВ:</v-list-tile-content>
-            <v-list-tile-content class="align-end">{{ event.ampl }}</v-list-tile-content>
+            <v-list-tile-content>Аплитуда, кА:</v-list-tile-content>
+            <v-list-tile-content class="align-end">{{ Math.round(event.ampl / 1000.0 * 100.0) / 100.0 }}</v-list-tile-content>
           </v-list-tile>
         </v-list>
       </v-card>
