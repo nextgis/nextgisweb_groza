@@ -3,7 +3,6 @@
 <script>
   import store from '../../store/index'
   import {GET_NGW_TILE_ADAPTER_URL} from '../../store/actions/ngw'
-  import NgwImageOverlay from '../../core/layers/NgwImageOverlay'
   import NgwTileLayer from '../../core/layers/NgwTileLayer'
 
   export default {
@@ -15,10 +14,11 @@
 
       store.dispatch(GET_NGW_TILE_ADAPTER_URL).then((url) => {
         if (layersInfo) {
-          for (const layerInfo of layersInfo) {
+          for(let i = layersInfo.length; i--;) {
+            const layerInfo = layersInfo[i]
             if (layerInfo.adapter !== 'ngw-webmap/TileAdapter') continue
-              const ngwImageLayer = new NgwTileLayer(url, layerInfo.styleId)
-              map.addLayer(ngwImageLayer)
+            const ngwImageLayer = new NgwTileLayer(url, layerInfo.styleId)
+            map.addLayer(ngwImageLayer)
           }
         }
       })
