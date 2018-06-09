@@ -6,6 +6,8 @@
 
 <script>
   import {IMAGE_ADAPTER_URL, NGW_WEB_MAP} from '../../store/actions/ngw'
+  import L from 'leaflet'
+  import * as lg from 'leaflet-graphicscale'
 
   export default {
     name: 'NgMap',
@@ -29,6 +31,11 @@
                 crs: L.CRS.EPSG3857
               })
               this.map.fitBounds(this.webMapInfo.extent)
+              const graphicScale = L.control.graphicScale({
+                showSubunits: true,
+                doubleLine: true,
+                fill: 'fill'
+              }).addTo(this.map)
 
               // const layers = webMapInfo.layers
               // const imageAdapterUrl = this.$store.dispatch(IMAGE_ADAPTER_URL)
