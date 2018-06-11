@@ -39,6 +39,7 @@ class NgwFacade():
         url = ngw['receiveEvents'].format(root=NgwFacade.config.get_ngw_url())
         response = requests.post(url, None, json=get_events_result.to_json())
         if response.status_code != 200:
+            info('[NGW] ERROR - Data was not sent!')
             return False
         response_json = response.json()
         if not response_json['success']:
