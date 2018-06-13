@@ -61,6 +61,24 @@ const RgEventsLayer = L.LayerGroup.extend({
       this._eventsLayer.showCloudEvents();
     });
     this._listeners.push(listener);
+
+    this._eventsSocket.onExpireCreate((expireCreateResult) => this._onExpireCreateHandler(expireCreateResult));
+  },
+
+  _onExpireCreateHandler: function (expireCreateResult) {
+    const data = expireCreateResult.data;
+    const eventId = data.id;
+
+    if (data.type === 'NEW_EXPIRE') {
+      const rule = data.rule;
+      console.log('NEW_EXPIRE', data);
+      this._eventsLayer.changeEventRule(eventId, rule);
+    }
+
+    if (data.type === 'REMOVE_EVENT') {
+      console.log('REMOVE_EVENT', data);
+      this._eventsLayer.removeEvent(eventId);
+    }
   },
 
   destroy: function () {
@@ -73,6 +91,7 @@ const RgEventsLayer = L.LayerGroup.extend({
     });
     this._eventsLayer.destroy();
     this._ellipsesLayer.destroy();
+    this._eventsSocket.destroy();
   }
 });
 

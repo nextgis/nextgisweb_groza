@@ -1,6 +1,6 @@
-import feathers from '@feathersjs/feathers';
-import socketio from '@feathersjs/socketio-client';
-import io from 'socket.io-client';
+const io = require('socket.io-client');
+const feathers = require('@feathersjs/feathers');
+const socketio = require('@feathersjs/socketio-client');
 
 
 export default class EventsSocket {
@@ -9,27 +9,21 @@ export default class EventsSocket {
 
     this._socket = io(window.grozaConfig.rgUrl, {
       transports: ['websocket'],
-      // upgrade: false,
       path: window.grozaConfig.rgPath
     });
 
-    this._app = feathers().configure(socketio(this._socket));
+    this._client = feathers();
+    this._client.configure(socketio(this._socket));
+  }
 
-    const eventsService = this._app.service('events');
-    eventsService.on('created', function (message) {
-      console.log('Created a message', message);
-    });
-    eventsService.on('expire', function (message) {
-      console.log('Created a message', message);
-    });
+  onExpireCreate(callback) {
+    const expireService = this._client.service('expire');
+    expireService.on('created', callback);
+  }
 
-    // that.socket.on('events created', function (msg) {
-    //   console.log('message: ' + msg);
-    // });
-    //
-    // this.socket.on('connection', function (socket) {
-    //
-    // });
+  offExpireCreate(callback) {
+    const expireService = this._client.service('expire');
+    expireService.removeListener('created', callback);
   }
 
   getEvents() {
@@ -40,5 +34,9 @@ export default class EventsSocket {
         resolve(events);
       });
     });
+  }
+
+  destroy() {
+    this._socket.disconnect();
   }
 }

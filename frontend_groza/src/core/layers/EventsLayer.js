@@ -5,6 +5,7 @@ import EventPopup from '../EventPopup/EventPopup';
 const EventsLayer = L.FeatureGroup.extend({
   initialize: function (styles, getEventMarkerOptions, options) {
     this._layers = {};
+    this._events = {};
     this._getEventMarkerOptions = getEventMarkerOptions;
     this._styles = styles;
     this._popup = null;
@@ -17,6 +18,7 @@ const EventsLayer = L.FeatureGroup.extend({
     circleMarker._grozaEvent = eventItem;
     circleMarker._grozaId = eventItem.id;
     this.addLayer(circleMarker);
+    this._events[circleMarker._grozaId] = circleMarker;
 
     const that = this;
     circleMarker.on('click', function () {
@@ -30,6 +32,30 @@ const EventsLayer = L.FeatureGroup.extend({
       map.openPopup(popup);
       that._popup = popup;
     });
+  },
+
+  changeEventRule: function (eventId, rule) {
+    if (!this._events.hasOwnProperty(eventId)) {
+      return false;
+    }
+
+    const circleMarker = this._events[eventId];
+
+    if (circleMarker._grozaEvent.rule === rule) {
+      console.log(`[changeEventRule] ID: ${circleMarker._grozaId} not changed. Circle rule ${circleMarker._grozaEvent.rule} `);
+      return false;
+    }
+
+    circleMarker._grozaEvent.rule = rule;
+    const markerOptions = this._getEventMarkerOptions.call(this, circleMarker._grozaEvent, this._styles);
+    circleMarker.setStyle(markerOptions);
+    return true;
+  },
+
+  removeEvent: function (eventId) {
+    const circleMarker = this._events[eventId];
+    this.removeLayer(circleMarker);
+    delete this._events[eventId];
   },
 
   hideCloudEvents() {
