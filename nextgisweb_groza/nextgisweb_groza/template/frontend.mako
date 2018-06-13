@@ -19,7 +19,7 @@
 <body>
 <div id="app"></div>
 <script src="${request.route_url('amd_package', subpath='ngw-groza/frontend/js/manifest.0563134b714d88290c59.js')}"></script>
-<script src="${request.route_url('amd_package', subpath='ngw-groza/frontend/js/vendor.2bf65f7b0ee1d66b6027.js')}"></script>
-<script src="${request.route_url('amd_package', subpath='ngw-groza/frontend/js/app.a0993359212b800ead84.js')}"></script>
+<script src="${request.route_url('amd_package', subpath='ngw-groza/frontend/js/vendor.a7efbb82e9a58a3b7362.js')}"></script>
+<script src="${request.route_url('amd_package', subpath='ngw-groza/frontend/js/app.273ea672dab357459540.js')}"></script>
 </body>
 </html>
