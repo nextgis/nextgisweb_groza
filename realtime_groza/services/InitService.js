@@ -1,6 +1,7 @@
 const redisDb = require('../redis.db');
 
 class InitService {
+
     async create(getEventsResult, params) {
         try {
             const result = redisDb.flushdb();
@@ -20,4 +21,4 @@ class InitService {
     }
 }
 
-module.exports = InitService;
+module.exports = new InitService();

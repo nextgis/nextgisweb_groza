@@ -1,6 +1,7 @@
 const redisDb = require('../redis.db');
 
 class EventsService {
+
     async create(getEventsResult, params) {
         try {
             redisDb.createEventsItems(getEventsResult.data);
@@ -27,6 +28,10 @@ class EventsService {
             console.log(e);
         }
     }
+
+    expire(data){
+        this.emit('expire', { data: data });
+    }
 }
 
-module.exports = EventsService;
+module.exports = new EventsService();

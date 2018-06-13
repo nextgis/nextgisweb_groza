@@ -6,6 +6,7 @@ const
     RedisSetController = require('./redis.controller.set'),
     EventsService = require('./services/EventsService'),
     InitService = require('./services/InitService'),
+    ExpireService = require('./services/ExpireService'),
     config = require('./config');
 
 const app = express(feathers());
@@ -23,24 +24,28 @@ app.use(express.urlencoded({
 app.configure(express.rest());
 app.configure(socketio());
 
-app.use('init', new InitService());
-app.use('events', new EventsService());
+app.use('init', InitService);
+app.use('events', EventsService);
+app.use('expire', ExpireService);
 
 app.use(express.errorHandler());
 
-app.on('connection', connection => {
-    console.log('connection');
-    console.log(connection);
-    app.channel('everybody').join(connection);
-});
-app.publish(data => {
-    console.log('data');
-    console.log(data);
-    app.channel('everybody')
+RedisExpireController.subscribeExpire(app);
+RedisSetController.subscribeSet(app);
+
+const expire = app.service('expire');
+expire.on('created', mess => {
+    console.log('mess');
 });
 
-RedisExpireController.subscribeExpire();
-RedisSetController.subscribeSet();
+app.service('expire').publish((data, context) => {
+  return app.channel(`anonymous`);
+});
+
+app.on('connection', connection => {
+  app.channel('anonymous').join(connection);
+  console.log('anonymous');
+});
 
 app.listen(config.rgConfig.port, config.rgConfig.host).on('listening', () =>
     console.log(`Feathers server listening on ${config.rgConfig.host}:${config.rgConfig.port}`)
