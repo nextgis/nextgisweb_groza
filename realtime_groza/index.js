@@ -33,11 +33,6 @@ app.use(express.errorHandler());
 RedisExpireController.subscribeExpire(app);
 RedisSetController.subscribeSet(app);
 
-const expire = app.service('expire');
-expire.on('created', mess => {
-    console.log('mess');
-});
-
 app.service('expire').publish((data, context) => {
   return app.channel(`anonymous`);
 });
