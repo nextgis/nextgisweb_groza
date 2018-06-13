@@ -40,7 +40,8 @@ class ExpireRules {
             return [null, null];
         }
 
-        const expireTimeSec = rule[1] - diff;
+        const expireTimeSec = rule[1] - diff + 1;
+
         return [expireTimeSec, rule[0]];
     }
 
