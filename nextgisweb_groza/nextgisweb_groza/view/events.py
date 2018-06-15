@@ -38,8 +38,8 @@ def get_events(request):
     start = params['start']
     end = params['end']
 
-    start = dateutil.parser.parse(start)
-    end = dateutil.parser.parse(end)
+    start = dateutil.parser.parse(start).replace(tzinfo=None)
+    end = dateutil.parser.parse(end).replace(tzinfo=None)
 
     with transaction.manager:
         events = Event\
