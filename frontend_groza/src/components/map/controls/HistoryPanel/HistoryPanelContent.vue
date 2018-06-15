@@ -92,7 +92,7 @@
     components: {RangeSelector},
     props: {
       formatDate: {
-        default: 'YYYY.MM.DD hh:mm',
+        default: 'YYYY.MM.DD HH:mm',
         type: String
       }
     },
