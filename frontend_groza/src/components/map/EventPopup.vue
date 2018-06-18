@@ -15,6 +15,11 @@
       <v-card>
         <v-list dense>
           <v-list-tile>
+            <v-list-tile-content>Идентификатор</v-list-tile-content>
+            <v-list-tile-content class="align-end">{{ event.id }}
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-list-tile>
             <v-list-tile-content>Дата</v-list-tile-content>
             <v-list-tile-content class="align-end">{{ moment(new Date(event.ev_ts*1000)).format('YYYY.MM.DD') }}
             </v-list-tile-content>
