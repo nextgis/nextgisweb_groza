@@ -26,7 +26,7 @@ const actions = {
   },
   [GET_NGW_TILE_ADAPTER_URL]: ({commit, dispatch}) => {
     const baseUrl = http.defaults.baseURL
-    return `${baseUrl}/api/component/render/tile?z={z}&x={x}&y={y}&resource={resourceId}`
+    return `${baseUrl}/api/component/render/tile?z={z}&x={x}&y={y}&resource={stylesId}`
   },
   [NGW_GET_EVENTS]: ({commit, dispatch}, params) => {
     return http.get(`/api/groza/events/`, {

@@ -8,10 +8,10 @@ const NgwTileLayer = L.TileLayer.extend({
   _ngwBaseImageUrl: null,
   _resourceId: null,
 
-  initialize: function (url, styleIdId, options) {
+  initialize: function (url, stylesId, options) {
     this._url = url;
     options = options || {};
-    options.resourceId = styleIdId;
+    options.stylesId = stylesId.join(',');
     L.TileLayer.prototype.initialize.call(this, url, options);
   }
 });
