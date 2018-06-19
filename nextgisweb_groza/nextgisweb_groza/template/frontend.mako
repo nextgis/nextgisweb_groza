@@ -13,13 +13,13 @@
     <script>
         window.grozaConfig = ${grozaConfig | json.dumps, n };
     </script>
-    <link href="${request.route_url('amd_package', subpath='ngw-groza/frontend/css/app.d6873a6c3accb4de41a4312b70c4f731.css')}"
+    <link href="${request.route_url('amd_package', subpath='ngw-groza/frontend/css/app.66e6eef6b7e0b5f42ddf078f48cc05c0.css')}"
           rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="app"></div>
 <script src="${request.route_url('amd_package', subpath='ngw-groza/frontend/js/manifest.0563134b714d88290c59.js')}"></script>
-<script src="${request.route_url('amd_package', subpath='ngw-groza/frontend/js/vendor.a7efbb82e9a58a3b7362.js')}"></script>
-<script src="${request.route_url('amd_package', subpath='ngw-groza/frontend/js/app.f3b27818a84e4648e737.js')}"></script>
+<script src="${request.route_url('amd_package', subpath='ngw-groza/frontend/js/vendor.c8c1064026583082ede7.js')}"></script>
+<script src="${request.route_url('amd_package', subpath='ngw-groza/frontend/js/app.631fb01e44f447a2f650.js')}"></script>
 </body>
 </html>
