@@ -26,6 +26,16 @@ export default class EventsSocket {
     expireService.removeListener('created', callback);
   }
 
+  onEventCreate(callback) {
+    const eventsService = this._client.service('events');
+    eventsService.on('createdEvents', callback);
+  }
+
+  offEventCreate(callback) {
+    const eventsService = this._client.service('events');
+    eventsService.removeListener('createdEvents', callback);
+  }
+
   getEvents() {
     const that = this;
     return new Promise((resolve, reject) => {

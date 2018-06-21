@@ -63,6 +63,7 @@ const RgEventsLayer = L.LayerGroup.extend({
     this._listeners.push(listener);
 
     this._eventsSocket.onExpireCreate((expireCreateResult) => this._onExpireCreateHandler(expireCreateResult));
+    this._eventsSocket.onEventCreate((eventCreateResult) => this._onEventCreateHandler(eventCreateResult));
   },
 
   _onExpireCreateHandler: function (expireCreateResult) {
@@ -78,6 +79,14 @@ const RgEventsLayer = L.LayerGroup.extend({
     if (data.type === 'REMOVE_EVENT') {
       console.log('REMOVE_EVENT', data);
       this._eventsLayer.removeEvent(eventId);
+    }
+  },
+
+  _onEventCreateHandler: function (eventCreateResult) {
+    const {count, events} = eventCreateResult;
+    if (count === 0) return false;
+    for(let event of events) {
+      this._eventsLayer.addEvent(event);
     }
   },
 
