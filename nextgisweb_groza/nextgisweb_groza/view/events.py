@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
-import transaction
 import dateutil.parser
+import datetime
+import transaction
 from last_update import LAST_UPDATE_KEY
 from nextgisweb.models import DBSession
 from nextgisweb_groza.models import Meta, EventsSetSchema, EventSchema, Event
-from response import *
 from pyramid.exceptions import HTTPBadRequest
+from response import *
 
 
 def receive_events(request):
@@ -42,12 +43,32 @@ def get_events(request):
     end = dateutil.parser.parse(end).replace(tzinfo=None)
 
     with transaction.manager:
-        events = Event\
-            .filter(Event.event_ts <= end)\
-            .filter(Event.event_ts >= start)\
+        events = Event \
+            .filter(Event.event_ts <= end) \
+            .filter(Event.event_ts >= start) \
             .all()
 
         schema = EventSchema(many=True)
         data, errors = schema.dump(events)
 
     return response_ok(data)
+
+
+def get_rg_events(request):
+    params = request.params
+    start = int(params['start'])
+    end = int(params['end'])
+
+    start_dt = datetime.datetime.utcfromtimestamp(start)
+    end_dt = datetime.datetime.utcfromtimestamp(end)
+
+    with transaction.manager:
+        events = Event \
+            .filter(Event.event_ts <= end_dt) \
+            .filter(Event.event_ts >= start_dt) \
+            .all()
+
+        schema = EventSchema(many=True)
+        data, errors = schema.dump(events)
+
+    return data

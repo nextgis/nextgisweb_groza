@@ -1,10 +1,10 @@
+import calendar
 import datetime
 
 import geoalchemy2 as ga
 from marshmallow import Schema, fields, post_load, pre_dump
 from model import Event
 from shapely import wkb
-import calendar
 
 
 class EventSchema(Schema):
