@@ -1,4 +1,6 @@
+import time
 import requests
+from toa_collector.model import GetEventsResult
 
 from ..endpoints import ngw
 from ..log import info
@@ -24,6 +26,20 @@ class NgwFacade():
         ))
         NgwFacade.last_update_cached = last_update_ts
         return last_update_ts
+
+    @staticmethod
+    def get_rg_events(ts_start, ts_stop=int(time.time())):
+        url = ngw['receiveRgEvents'].format(root=NgwFacade.config.get_ngw_url())
+        response = requests.get(url, params={
+            'start': ts_start,
+            'end': ts_stop
+        })
+        response_json = response.json()
+
+        get_events_result = GetEventsResult(ts_start, ts_stop, response_json)
+
+        info('[NGW] Recieved RG events from NGW')
+        return get_events_result
 
     @staticmethod
     def get_last_update_cached():

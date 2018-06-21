@@ -1,6 +1,7 @@
 ngw = {
     'lastUpdate': '{root}/api/groza/last-update',
-    'receiveEvents': '{root}/api/groza/events/'
+    'receiveEvents': '{root}/api/groza/events/',
+    'receiveRgEvents': '{root}/api/groza/rg/events'
 }
 
 toa = {

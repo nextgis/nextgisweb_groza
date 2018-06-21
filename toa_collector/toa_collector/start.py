@@ -15,12 +15,15 @@ def clip(get_events_result):
 
 def pull_old_events(ts_start, ts_stop):
     get_events_result = ToaFacade.collect(ts_start, ts_stop)
-    clip(get_events_result)
     if get_events_result:
+        clip(get_events_result)
         success_result = NgwFacade.send_events_to_ngw(get_events_result)
         if not success_result:
             time.sleep(Config.get_repeat_delay())
             pull_old_events(ts_start, ts_stop)
+    else:
+        time.sleep(Config.get_repeat_delay())
+        pull_old_events(ts_start, ts_stop)
 
 
 def handle_last_interval(current_ts):
@@ -45,17 +48,24 @@ def handle_last_interval(current_ts):
 
 def init_redis(current_ts):
     ts_start = current_ts - Config.get_active_monitoring_period()
-    get_events_result = ToaFacade.collect(ts_start, current_ts)
+    get_events_result = NgwFacade.get_rg_events(ts_start, current_ts)
+    # get_events_result = ToaFacade.collect(ts_start, current_ts)
     clip(get_events_result)
-    RgFacade.init_events(get_events_result)
+    result = RgFacade.init_events(get_events_result)
+    if not result:
+        time.sleep(Config.get_repeat_delay())
+        init_redis(current_ts)
 
 
 def periodic_pull_events(ts_start, ts_stop):
     get_events_result = ToaFacade.collect(ts_start, ts_stop)
-    clip(get_events_result)
     if get_events_result:
+        clip(get_events_result)
         push_events_to_ngw(get_events_result)
         push_events_to_rg(get_events_result)
+    else:
+        time.sleep(Config.get_repeat_delay())
+        periodic_pull_events(ts_start, ts_stop)
 
 
 def push_events_to_ngw(get_events_result):
