@@ -34,12 +34,17 @@ RedisExpireController.subscribeExpire(app);
 RedisSetController.subscribeSet(app);
 
 app.service('expire').publish((data, context) => {
-  return app.channel(`anonymous`);
+    return app.channel(`anonymous`);
+});
+
+app.service('events').publish('createdEvents', (data, context) => {
+    console.log(data);
+    return app.channel('anonymous').send(data);
 });
 
 app.on('connection', connection => {
-  app.channel('anonymous').join(connection);
-  console.log('anonymous');
+    app.channel('anonymous').join(connection);
+    console.log('anonymous');
 });
 
 app.listen(config.rgConfig.port, config.rgConfig.host).on('listening', () =>

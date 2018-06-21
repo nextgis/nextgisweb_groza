@@ -32,10 +32,6 @@ class ExpireService {
             });
         });
     }
-
-    async find(params) {
-
-    }
 }
 
 module.exports = new ExpireService();

@@ -48,7 +48,8 @@ class RedisDb {
         for (let eventItem of eventItems) {
             RedisDb._makeEventItemKeys(multi, eventItem);
         }
-        multi.exec()
+        multi.exec();
+        return eventItems;
     }
 
     static _makeEventItemKeys(multi, eventItem) {

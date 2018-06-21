@@ -2,14 +2,24 @@ const redisDb = require('../redis.db');
 
 class EventsService {
 
+    constructor () {
+        this.events = ['createdEvents'];
+    }
+
     async create(getEventsResult, params) {
         try {
-            redisDb.createEventsItems(getEventsResult.data);
+            const eventItems = redisDb.createEventsItems(getEventsResult.data);
+            const countEvents = getEventsResult.data.length;
+
+            this.emit('createdEvents', {
+                count: countEvents,
+                events: eventItems
+            });
 
             return {
                 success: true,
                 data: {
-                    count: getEventsResult.data.length,
+                    count: countEvents,
                     start: getEventsResult.start,
                     stop: getEventsResult.stop
                 }
@@ -27,10 +37,6 @@ class EventsService {
         } catch (e) {
             console.log(e);
         }
-    }
-
-    expire(data){
-        this.emit('expire', { data: data });
     }
 }
 
