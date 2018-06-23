@@ -15,7 +15,7 @@ class RgFacade():
     @staticmethod
     def init_events(get_events_result):
         url = rg['init'].format(root=RgFacade.config.get_rg_url())
-        response = requests.post(url, json=get_events_result.to_dict())
+        response = requests.post(url, json=get_events_result.to_dict(), timeout=60)
 
         if response.status_code != 201:
             info('[RG] Init events failed')
@@ -41,7 +41,7 @@ class RgFacade():
     @staticmethod
     def send_events(get_events_result):
         url = rg['events'].format(root=RgFacade.config.get_rg_url())
-        response = requests.post(url, json=get_events_result.to_dict())
+        response = requests.post(url, json=get_events_result.to_dict(), timeout=60)
 
         if response.status_code != 201:
             info('[RG] Send events failed')

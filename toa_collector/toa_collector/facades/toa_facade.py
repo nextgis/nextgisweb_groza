@@ -24,7 +24,7 @@ class ToaFacade():
             stop=ts_to_iso_8601(ts_stop)
         )
         info('[TOA] Getting from "{}"'.format(get_events_url))
-        response = requests.get(get_events_url)
+        response = requests.get(get_events_url, timeout=60)
 
         if response.status_code != 200:
             info('[TOA] Result failed. Http code: "{0}". Body: "{1}"'.format(
