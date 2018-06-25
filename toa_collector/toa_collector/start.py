@@ -49,7 +49,6 @@ def handle_last_interval(current_ts):
 def init_redis(current_ts):
     ts_start = current_ts - Config.get_active_monitoring_period()
     get_events_result = NgwFacade.get_rg_events(ts_start, current_ts)
-    # get_events_result = ToaFacade.collect(ts_start, current_ts)
     clip(get_events_result)
     result = RgFacade.init_events(get_events_result)
     if not result:

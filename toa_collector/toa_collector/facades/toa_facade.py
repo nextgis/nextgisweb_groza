@@ -7,6 +7,7 @@ from ..log import info
 from ..model import GetEventsResult
 from ..schemas.toa import ToaEventsSetSchema
 from ..utils import ts_to_iso_8601
+from ..log import data
 
 
 class ToaFacade():
@@ -18,10 +19,13 @@ class ToaFacade():
 
     @staticmethod
     def collect(ts_start, ts_stop=int(time.time())):
+        start_iso = ts_to_iso_8601(ts_start)
+        end_iso = ts_to_iso_8601(ts_start)
+
         get_events_url = toa['getEvents'].format(
             root=ToaFacade.config.get_toa_url(),
-            start=ts_to_iso_8601(ts_start),
-            stop=ts_to_iso_8601(ts_stop)
+            start=start_iso,
+            stop=end_iso
         )
         info('[TOA] Getting from "{}"'.format(get_events_url))
         response = requests.get(get_events_url, timeout=60)
@@ -32,6 +36,10 @@ class ToaFacade():
                 response.text
             ))
             return None
+
+        data(Config=ToaFacade.config,
+             file_name='{start}-{end}'.format(start=start_iso, end=end_iso),
+             data_to_log=response.text)
 
         schema_result = ToaEventsSetSchema().loads(response.text)
 
