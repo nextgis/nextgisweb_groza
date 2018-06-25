@@ -13,6 +13,7 @@ class Config():
     chunk_pulling_period = None
     active_monitoring_period = None
     clipping_shp_path = None
+    data_logs_path = None
 
     @staticmethod
     def init():
@@ -85,3 +86,16 @@ class Config():
         clipping_shp_path = Config.config.get(section_name, 'clipping_shp_path')
         Config.clipping_shp_path = clipping_shp_path
         return Config.clipping_shp_path
+
+    @staticmethod
+    def get_data_config_path():
+        if Config.data_logs_path == -1:
+            return False
+        if Config.data_logs_path:
+            return Config.data_logs_path
+        if not Config.config.has_option(section_name, 'data_logs_path'):
+            Config.data_logs_path = -1
+            return False
+        data_logs_path = Config.config.get(section_name, 'data_logs_path')
+        Config.data_logs_path = data_logs_path
+        return Config.data_logs_path
