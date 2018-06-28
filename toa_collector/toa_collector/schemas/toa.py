@@ -54,8 +54,14 @@ class ToaEventSchema(Schema):
         else:
             raise ValueError('"%" event type is not defined'.format(item['eventType']))
 
+        event_id = item['eventId']
+        event_id_with_month = '{event_id}-{month}'.format(
+            event_id=event_id,
+            month=item['lastModifiedDateTime'].month
+        )
+
         event = dict(
-            id=item['eventId'],
+            id=event_id_with_month,
             ligh_t=ligh_t,
             ev_t=ev_t,
             lm_ts=datetime_to_utc_ts(item['lastModifiedDateTime']),
