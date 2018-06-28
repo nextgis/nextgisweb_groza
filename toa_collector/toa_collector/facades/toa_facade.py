@@ -1,4 +1,5 @@
 import time
+import datetime
 
 import requests
 
@@ -38,7 +39,10 @@ class ToaFacade():
             return None
 
         data(Config=ToaFacade.config,
-             file_name='{start}-{end}'.format(start=start_iso, end=end_iso),
+             file_name='[{current}] {start} - {end}'.format(
+                 current=datetime.datetime.now().strftime("%Y-%m-%dT%H%M%SZ"),
+                 start=start_iso,
+                 end=end_iso),
              data_to_log=response.text)
 
         schema_result = ToaEventsSetSchema().loads(response.text)
