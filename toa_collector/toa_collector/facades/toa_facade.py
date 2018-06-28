@@ -20,7 +20,7 @@ class ToaFacade():
     @staticmethod
     def collect(ts_start, ts_stop=int(time.time())):
         start_iso = ts_to_iso_8601(ts_start)
-        end_iso = ts_to_iso_8601(ts_start)
+        end_iso = ts_to_iso_8601(ts_stop)
 
         get_events_url = toa['getEvents'].format(
             root=ToaFacade.config.get_toa_url(),
