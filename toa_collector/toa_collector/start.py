@@ -84,7 +84,7 @@ def push_events_to_rg(get_events_result):
 
 
 def periodic_collect():
-    current_ts = get_now_utc_ts()
+    current_ts = get_now_utc_ts() - Config.get_shift_time()
     last_update_ts = NgwFacade.get_last_update_cached()
     info('[periodic] Start update from "{start}" to "{end}"'.format(
         start=ts_to_iso_8601(last_update_ts),
@@ -95,7 +95,7 @@ def periodic_collect():
 
 
 def run():
-    current_ts = get_now_utc_ts()
+    current_ts = get_now_utc_ts() - Config.get_shift_time()
     handle_last_interval(current_ts)
     init_redis(current_ts)
 
