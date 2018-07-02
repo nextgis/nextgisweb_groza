@@ -14,6 +14,7 @@ class Config():
     active_monitoring_period = None
     clipping_shp_path = None
     data_logs_path = None
+    shift_time = None
 
     @staticmethod
     def init():
@@ -99,3 +100,14 @@ class Config():
         data_logs_path = Config.config.get(section_name, 'data_logs_path')
         Config.data_logs_path = data_logs_path
         return Config.data_logs_path
+
+    @staticmethod
+    def get_shift_time():
+        if Config.shift_time is not None:
+            return Config.shift_time
+        if not Config.config.has_option(section_name, 'shift_time'):
+            Config.shift_time = 0
+            return Config.shift_time
+        shift_time = Config.config.get(section_name, 'shift_time')
+        Config.shift_time = int(shift_time)
+        return Config.shift_time
