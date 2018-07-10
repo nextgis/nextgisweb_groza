@@ -1,18 +1,22 @@
 import L from 'leaflet';
+import EventBus from '../../event-bus';
 import * as Ellipse from 'leaflet-ellipse';
 
 const EllipsesLayer = L.FeatureGroup.extend({
   initialize: function (settings, options) {
     this._layers = {};
+    this._listeners = [];
     this._isVisibleEllipses = true;
     this._style = settings.ellipseStyle;
     this._ellipseVisibleZoom = settings.ellipse_z_visible;
+    this._sheetEllipsesElement = null;
+    this._sheetCloudEllipsesElement = null;
     L.setOptions(this, options);
   },
 
   addEvent: function (eventItem) {
     const options = {
-      className: 'ev_el'
+      className: `ev_el el_ligh_t_${eventItem.ligh_t}`
     };
     Object.assign(options, this._style);
 
@@ -32,9 +36,21 @@ const EllipsesLayer = L.FeatureGroup.extend({
   },
 
   _bindEvents: function (map) {
+    let listener;
+
     map.on('zoomend', () => {
       this._updateVisibleEllipses();
     });
+
+    listener = EventBus.$on('HIDE_CLOUD_EVENTS', () => {
+      this.hideCloudEllipses();
+    });
+    this._listeners.push(listener);
+
+    listener = EventBus.$on('SHOW_CLOUD_EVENTS', () => {
+      this.showCloudEllipses();
+    });
+    this._listeners.push(listener);
   },
 
   _updateVisibleEllipses: function () {
@@ -54,13 +70,23 @@ const EllipsesLayer = L.FeatureGroup.extend({
   hideEllipses() {
     const sheet = document.createElement('style');
     sheet.innerHTML = 'path.ev_el { display: none; }';
-    this._sheetElement = document.body.appendChild(sheet);
+    this._sheetEllipsesElement = document.body.appendChild(sheet);
     this._isVisibleEllipses = false;
   },
 
   showEllipses() {
-    this._removeSheetElement();
+    this._removeSheetElement('_sheetEllipsesElement');
     this._isVisibleEllipses = true;
+  },
+
+  hideCloudEllipses() {
+    const sheet = document.createElement('style');
+    sheet.innerHTML = 'path.el_ligh_t_0 { display: none; }';
+    this._sheetCloudEllipsesElement = document.body.appendChild(sheet);
+  },
+
+  showCloudEllipses() {
+    this._removeSheetElement('_sheetCloudEllipsesElement');
   },
 
   addEvents: function (eventItems) {
@@ -70,14 +96,23 @@ const EllipsesLayer = L.FeatureGroup.extend({
   },
 
   destroy: function () {
-    this._removeSheetElement();
+    this._unbindEvents();
+    this._removeSheetElement('_sheetEllipsesElement');
+    this._removeSheetElement('_sheetCloudEllipsesElement');
   },
 
-  _removeSheetElement: function () {
-    if (this._sheetElement) {
-      document.body.removeChild(this._sheetElement);
+  _removeSheetElement: function (sheetElementKey) {
+    let sheetElement = this[sheetElementKey];
+    if (sheetElement && sheetElement.parentElement) {
+      document.body.removeChild(sheetElement);
     }
-    this._sheetElement = null;
+    sheetElement = null;
+  },
+
+  _unbindEvents: function () {
+    this._listeners.forEach((listener) => {
+      listener.$off();
+    });
   }
 });
 
