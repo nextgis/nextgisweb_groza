@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import {IMAGE_ADAPTER_URL, NGW_WEB_MAP} from '../../store/actions/ngw'
+  import {NGW_WEB_MAP} from '../../store/actions/ngw'
   import L from 'leaflet'
   import * as lg from 'leaflet-graphicscale'
 
@@ -40,8 +40,8 @@
               // const layers = webMapInfo.layers
               // const imageAdapterUrl = this.$store.dispatch(IMAGE_ADAPTER_URL)
               // for (let layer of layers) {
-                // const imageNgwLayer = new L.ImageOverlay.ImageNgwOverlay(imageAdapterUrl)
-                // this.map.addLayer(imageNgwLayer)
+              // const imageNgwLayer = new L.ImageOverlay.ImageNgwOverlay(imageAdapterUrl)
+              // this.map.addLayer(imageNgwLayer)
               // }
             } else {
               // todo: handle unsuccessful result
@@ -53,6 +53,13 @@
     }
   }
 </script>
+
+<style>
+  .ng-map .leaflet-top,
+  .ng-map .leaflet-bottom {
+    z-index: 800;
+  }
+</style>
 
 <style scoped>
   .ng-map {

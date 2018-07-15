@@ -58,9 +58,9 @@
           </v-list-tile>
         </v-list>
       </v-card>
-      <v-dialog v-model="timeRangeDialog" max-width="500px">
+      <v-dialog v-model="timeRangeDialog" max-width="750px">
         <v-card>
-          <v-card-title>
+          <v-card-title class="toolbar blue white--text" style="text-align: left">
             Настройка периода времени
           </v-card-title>
           <v-card-text>
