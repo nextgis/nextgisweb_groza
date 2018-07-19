@@ -58,6 +58,7 @@
           </v-list-tile>
         </v-list>
       </v-card>
+      <ng-history-legend></ng-history-legend>
       <v-dialog v-model="timeRangeDialog" max-width="750px">
         <v-card>
           <v-card-title class="toolbar blue white--text" style="text-align: left">
@@ -86,10 +87,11 @@
   import router from '../../../../router/index'
   import moment from 'moment'
   import EventBus from '../../../../event-bus'
+  import NgHistoryLegend from '../../../../components/static/HistoryLegend';
 
   export default {
     name: 'HistoryPanelContent',
-    components: {RangeSelector},
+    components: {NgHistoryLegend, RangeSelector},
     props: {
       formatDate: {
         default: 'YYYY.MM.DD HH:mm',
