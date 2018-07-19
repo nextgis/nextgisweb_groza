@@ -40,6 +40,7 @@
           </v-list-tile>
         </v-list>
       </v-card>
+      <ng-monitoring-legend></ng-monitoring-legend>
     </div>
   </div>
 </template>
@@ -47,9 +48,11 @@
 <script>
   import router from '../../../../router/index'
   import EventBus from '../../../../event-bus'
+  import NgMonitoringLegend from '../../../../components/static/MonitoringLegend';
 
   export default {
     name: 'MonitoringPanelContent',
+    components: {NgMonitoringLegend},
     data() {
       return {
         closed: false,
