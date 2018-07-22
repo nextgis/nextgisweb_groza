@@ -39,17 +39,20 @@ const RgEventsLayer = L.LayerGroup.extend({
   },
 
   onAdd: function (map) {
+    this._getInitialEvents();
     this._bindEvents();
     L.LayerGroup.prototype.onAdd.call(this, map);
   },
 
-  _bindEvents: function () {
+  _getInitialEvents: function () {
     const that = this;
     this._eventsSocket.getEvents().then((eventsItems) => {
       that._eventsLayer.addEvents(eventsItems);
       that._ellipsesLayer.addEvents(eventsItems);
     });
+  },
 
+  _bindEvents: function () {
     let listener;
 
     listener = EventBus.$on('HIDE_CLOUD_EVENTS', () => {
