@@ -1,0 +1,19 @@
+div.leaflet-pane path.ng-zone-0 {
+  fill: #ff0000;
+}
+
+div.leaflet-pane path.ng-zone-1 {
+  fill: #ffb500;
+}
+
+div.leaflet-pane path.ng-zone-2 {
+  fill: #fffd00;
+}
+
+div.leaflet-pane path.ng-zone {
+  display: none;
+}
+
+div.leaflet-pane.ng-alert path.ng-zone.ng-alert {
+  display: block;
+}
