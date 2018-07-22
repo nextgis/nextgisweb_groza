@@ -1,6 +1,7 @@
 import L from 'leaflet';
 import ShapeMarker from './L.ShapeMarker';
 import EventPopup from '../EventPopup/EventPopup';
+import EventBus from '../../event-bus';
 
 const EventsLayer = L.FeatureGroup.extend({
   initialize: function (styles, getEventMarkerOptions, options) {
@@ -32,6 +33,10 @@ const EventsLayer = L.FeatureGroup.extend({
       map.openPopup(popup);
       that._popup = popup;
     });
+
+    if (eventItem.rule === 0 || eventItem.rule === 61) {
+      EventBus.$emit('EVENT_LESS_FIVE_MINUTE_CREATED', eventItem);
+    }
   },
 
   changeEventRule: function (eventId, rule) {
@@ -44,6 +49,10 @@ const EventsLayer = L.FeatureGroup.extend({
     if (circleMarker._grozaEvent.rule === rule) {
       console.log(`[changeEventRule] ID: ${circleMarker._grozaId} not changed. Circle rule ${circleMarker._grozaEvent.rule} `);
       return false;
+    }
+
+    if (circleMarker._grozaEvent.rule === 61) {
+      EventBus.$emit('EVENT_LESS_FIVE_MINUTE_REMOVED', circleMarker._grozaEvent);
     }
 
     circleMarker._grozaEvent.rule = rule;
