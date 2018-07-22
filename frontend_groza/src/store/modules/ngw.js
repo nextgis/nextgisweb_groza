@@ -1,5 +1,12 @@
 import axios from 'axios'
-import {IMAGE_ADAPTER_URL, NGW_GET_EVENTS, NGW_LOGIN, NGW_WEB_MAP, GET_NGW_TILE_ADAPTER_URL} from '../actions/ngw'
+import {
+  GET_NGW_TILE_ADAPTER_URL,
+  IMAGE_ADAPTER_URL,
+  NGW_GET_EVENTS,
+  NGW_GET_ZONES,
+  NGW_LOGIN,
+  NGW_WEB_MAP
+} from '../actions/ngw'
 import qs from 'qs'
 
 const state = {}
@@ -32,7 +39,20 @@ const actions = {
     return http.get(`/api/groza/events/`, {
       params: params
     })
-  }
+  },
+  [NGW_GET_ZONES]: ({commit, dispatch}, params) => {
+    const zoneFirst = window.grozaConfig.settings.zone_1_class
+    const zoneSecond = window.grozaConfig.settings.zone_2_class
+    const zoneThird = window.grozaConfig.settings.zone_3_class
+
+    if (!zoneFirst || !zoneSecond || !zoneThird) return null
+
+    return axios.all([
+      axios.get(`${baseUrl}/api/resource/${zoneFirst}/feature/`),
+      axios.get(`${baseUrl}/api/resource/${zoneSecond}/feature/`),
+      axios.get(`${baseUrl}/api/resource/${zoneThird}/feature/`),
+    ])
+  },
 }
 
 const mutations = {}
