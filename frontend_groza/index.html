@@ -3,17 +3,16 @@
 <head>
   <meta charset="utf-8">
   <title>[dev] Frontend for Groza GIS</title>
-  <link href="https://unpkg.com/vuetify/dist/vuetify.min.css" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
   <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
 
   <script>
     window.grozaConfig = {
       ngwUrl: '/ngw',
-      rgUrl: '{YOUR_RG_HOST_URL}',
-      rgPath: '{YOUR_RG_PATH_URL}',
+      rgUrl: '192.168.152.128:8085',
+      rgPath: '/socket.io/',
       settings: {
-        ellipse_z_visible: 18,
+        ellipse_z_visible: 13,
         web_map: 1,
         eventsStyles: {
           types: {
@@ -136,6 +135,9 @@
             }
           }
         },
+        zone_2_class: 123,
+        zone_3_class: 122,
+        zone_1_class: 124,
         ellipseStyle: {
           fill: false,
           fillOpacity: 0.9,

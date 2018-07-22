@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import {NGW_WEB_MAP} from '../../store/actions/ngw'
+  import {NGW_GET_ZONES, NGW_WEB_MAP} from '../../store/actions/ngw'
   import L from 'leaflet'
   import * as lg from 'leaflet-graphicscale'
 
@@ -37,6 +37,12 @@
                 fill: 'fill'
               }).addTo(this.map)
 
+              this.$store.dispatch(NGW_GET_ZONES)
+                .then((zonesResult) => {
+                  this.map.grozaZones = zonesResult.map(z => z.data);
+                  this.ready = true
+                });
+
               // const layers = webMapInfo.layers
               // const imageAdapterUrl = this.$store.dispatch(IMAGE_ADAPTER_URL)
               // for (let layer of layers) {
@@ -46,8 +52,6 @@
             } else {
               // todo: handle unsuccessful result
             }
-
-            this.ready = true
           })
       }
     }

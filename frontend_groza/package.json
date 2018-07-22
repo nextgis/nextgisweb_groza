@@ -12,6 +12,7 @@
   "dependencies": {
     "@feathersjs/client": "^3.5.0",
     "@feathersjs/feathers": "^3.1.5",
+    "@mapbox/leaflet-pip": "^1.1.0",
     "ajv": "^6.5.0",
     "ajv-keywords": "^3.1.0",
     "axios": "^0.18.0",
@@ -23,6 +24,7 @@
     "leaflet-svg-shape-markers": "^1.0.0",
     "moment": "^2.22.1",
     "proj4": "^2.4.4",
+    "proj4leaflet": "^1.0.2",
     "qs": "^6.5.1",
     "socket.io": "^2.1.0",
     "socket.io-client": "^2.1.1",
@@ -34,7 +36,8 @@
     "vue-splitpane": "^1.0.2",
     "vue2-leaflet": "^1.0.2",
     "vuetify": "^1.0.17",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "wellknown": "^0.5.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
