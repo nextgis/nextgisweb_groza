@@ -21,8 +21,8 @@
           </td>
           <td class="point-column">
             <svg width="22" height="22">
-              <path stroke="#999999" stroke-opacity="1" stroke-width="1" stroke-linecap="round"
-                    stroke-linejoin="round" fill="#cccccc" fill-opacity="0.5" fill-rule="evenodd"
+              <path stroke="#000000" stroke-opacity="1" stroke-width="1" stroke-linecap="round"
+                    stroke-linejoin="round" fill="#000000" fill-opacity="0.5" fill-rule="evenodd"
                     d="M 1 11 a10,10 0 1,0 20,0 a10,10 0 1,0 -20,0" class=""></path>
             </svg>
           </td>
@@ -42,10 +42,11 @@
           <td class="legend-item">
             <span>2-5 минут</span>
           </td>
+
           <td class="point-column">
             <svg width="22" height="22">
-              <path stroke="#0047b3" stroke-opacity="1" stroke-width="1" stroke-linecap="round"
-                    stroke-linejoin="round" fill="#3385ff" fill-opacity="0.5" fill-rule="evenodd"
+              <path stroke="#999999" stroke-opacity="1" stroke-width="1" stroke-linecap="round"
+                    stroke-linejoin="round" fill="#cccccc" fill-opacity="0.5" fill-rule="evenodd"
                     d="M 1 11 a10,10 0 1,0 20,0 a10,10 0 1,0 -20,0" class=""></path>
             </svg>
           </td>
@@ -65,10 +66,11 @@
           <td class="legend-item">
             <span>6-10 минут</span>
           </td>
+
           <td class="point-column">
             <svg width="22" height="22">
-              <path stroke="#0066cc" stroke-opacity="1" stroke-width="1" stroke-linecap="round"
-                    stroke-linejoin="round" fill="#b3d9ff" fill-opacity="0.5" fill-rule="evenodd"
+              <path stroke="#0047b3" stroke-opacity="1" stroke-width="1" stroke-linecap="round"
+                    stroke-linejoin="round" fill="#3385ff" fill-opacity="0.5" fill-rule="evenodd"
                     d="M 1 11 a10,10 0 1,0 20,0 a10,10 0 1,0 -20,0" class=""></path>
             </svg>
           </td>
@@ -90,8 +92,8 @@
           </td>
           <td class="point-column">
             <svg width="22" height="22">
-              <path stroke="#000000" stroke-opacity="1" stroke-width="1" stroke-linecap="round"
-                    stroke-linejoin="round" fill="#ffffff" fill-opacity="0.5" fill-rule="evenodd"
+              <path stroke="#0066cc" stroke-opacity="1" stroke-width="1" stroke-linecap="round"
+                    stroke-linejoin="round" fill="#b3d9ff" fill-opacity="0.5" fill-rule="evenodd"
                     d="M 1 11 a10,10 0 1,0 20,0 a10,10 0 1,0 -20,0" class=""></path>
             </svg>
           </td>
