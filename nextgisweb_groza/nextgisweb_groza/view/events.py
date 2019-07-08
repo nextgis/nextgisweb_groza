@@ -2,6 +2,7 @@
 import dateutil.parser
 import datetime
 import transaction
+from sqlalchemy import exists
 from last_update import LAST_UPDATE_KEY
 from nextgisweb.models import DBSession
 from nextgisweb_groza.models import Meta, EventsSetSchema, EventSchema, Event
@@ -20,11 +21,18 @@ def receive_events(request):
     if 'data' in parsed_events_set.data:
         events = parsed_events_set.data['data']
 
+    events_to_insert = []
+    for event in events:
+        existed = DBSession.query(exists().where(Event.event_id==event.event_id)).scalar()
+        exists_in_inserted_list = any(ev.event_id == event.event_id for ev in events_to_insert)
+        if not existed and not exists_in_inserted_list:
+            events_to_insert.append(event)
+
     with transaction.manager:
         Meta.filter_by(key=LAST_UPDATE_KEY).update({
             'value': last_update_ts
         })
-        for event in events:
+        for event in events_to_insert:
             DBSession.add(event)
     return response_ok(dict(
         count=len(events),
