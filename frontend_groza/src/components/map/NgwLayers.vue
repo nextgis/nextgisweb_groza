@@ -18,10 +18,7 @@
           for(let i = layersInfo.length; i--;) {
             const layerInfo = layersInfo[i]
             if (layerInfo.adapter !== 'ngw-webmap/TileAdapter') continue
-            stylesId.push(layerInfo.styleId);
-          }
-          if (stylesId.length > 0) {
-            const ngwImageLayer = new NgwTileLayer(url, stylesId)
+            const ngwImageLayer = new NgwTileLayer(url, [layerInfo.styleId])
             map.addLayer(ngwImageLayer)
           }
         }
