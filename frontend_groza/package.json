@@ -27,7 +27,7 @@
     "proj4": "^2.4.4",
     "proj4leaflet": "^1.0.2",
     "qs": "^6.5.1",
-    "socket.io": "^2.1.0",
+    "socket.io": "^2.4.0",
     "socket.io-client": "^2.1.1",
     "uws": "^10.148.0",
     "vue": "^2.5.2",
