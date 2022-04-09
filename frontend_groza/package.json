@@ -23,7 +23,7 @@
     "leaflet-ellipse": "^0.9.1",
     "leaflet-graphicscale": "0.0.2",
     "leaflet-svg-shape-markers": "^1.0.0",
-    "moment": "^2.22.1",
+    "moment": "^2.29.2",
     "proj4": "^2.4.4",
     "proj4leaflet": "^1.0.2",
     "qs": "^6.5.1",
